@@ -2,7 +2,7 @@
 import { useAppStore } from '@/stores/app'
 import { useUserStore } from '@/stores/user'
 import { useRouter, useRoute } from 'vue-router'
-import { SidebarMenu } from '@/components/sidebar'
+import { SidebarMenu, SidebarBurger } from '@/components/sidebar'
 
 const appStore = useAppStore()
 const userStote = useUserStore()
@@ -17,7 +17,7 @@ const logout = async () => {
 
 <template>
    <main>
-      <SidebarMenu></SidebarMenu>
+      <SidebarMenu />
       <div
          class="transition-all duration-300"
          :class="{
@@ -34,7 +34,7 @@ const logout = async () => {
                         @click="appStore.sidebarToogle()"
                         v-model="appStore.isSidebarCollapes"
                      ></SidebarBurger>
-                     <nuxt-link to="/" class="text-2xl font-bold">Kasir</nuxt-link>
+                     <router-link to="/" class="text-2xl font-bold">Kasir</router-link>
                   </div>
                   <div class="navbar-end">
                      <button class="btn btn-ghost btn-sm" @click="logout">Logout</button>
