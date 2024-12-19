@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getToken } from '@/lib/auth'
+import { toast } from 'vue-sonner'
 
 const request = axios.create({
    baseURL: import.meta.env.VITE_APP_API_URL,
@@ -20,8 +21,7 @@ request.interceptors.request.use(
       return config
    },
    (error) => {
-      // lakukan sesuatu jika terjadi kesalahan
-      console.error(error)
+      console.error(error) // for debug
       return Promise.reject(error)
    },
 )
@@ -32,7 +32,12 @@ request.interceptors.response.use(
       return response
    },
    (error) => {
-      console.error(error)
+      const response = error?.response
+      if (response) {
+         toast.error(response.data.message)
+      } else {
+         toast.error(error.message)
+      }
       return Promise.reject(error)
    },
 )

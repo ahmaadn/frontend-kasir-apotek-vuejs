@@ -7,6 +7,7 @@ import * as z from 'zod'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
+import { toast } from 'vue-sonner'
 
 const userStore = useUserStore()
 const disabled = ref(false)
@@ -25,7 +26,9 @@ const onSumbit = handleSubmit((values) => {
    disabled.value = true
    userStore
       .login(values)
-      .then(async () => {
+      .then(async (res) => {
+         const { message } = res.data
+         toast.success(message)
          await router.push({ name: 'home' })
          disabled.value = false
       })
