@@ -1,7 +1,11 @@
+<script setup>
+const props = defineProps(['to'])
+</script>
+
 <template>
-   <router-link to="/" class="w-full text-nowrap px-2">
+   <router-link :to="props.to" class="w-full text-nowrap px-2">
       <slot name="icon" />
-      <span class="sidebar-link">
+      <span class="sidebar-link whitespace-nowrap">
          <slot name="label" />
       </span>
    </router-link>

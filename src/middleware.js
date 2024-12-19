@@ -1,8 +1,9 @@
 import router from './router'
-import { useUserStore } from './stores/user'
-import { getToken } from './lib/auth'
+import { useUserStore } from '@/stores/user'
+import { getToken } from '@/lib/auth'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { useAppStore } from '@/stores/app'
 
 router.beforeEach(async (to, from, next) => {
    NProgress.start()
@@ -13,13 +14,15 @@ router.beforeEach(async (to, from, next) => {
          next({ name: 'home' })
          NProgress.done()
       } else {
-         const user = useUserStore()
+         const userStore = useUserStore()
+         const appStore = useAppStore()
          try {
             // await user.getInfo()
+            appStore.generateSidebarMenu()
             next()
             NProgress.done()
          } catch (e) {
-            user.logout()
+            userStore.logout()
             console.error(e)
             next({ name: 'login' })
             NProgress.done()

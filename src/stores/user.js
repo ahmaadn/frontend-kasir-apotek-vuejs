@@ -2,6 +2,7 @@ import { jwtDecode } from 'jwt-decode'
 import { defineStore } from 'pinia'
 import { loginWithJWT } from '@/lib/api/user'
 import { getToken, removeToken, setToken } from '@/lib/auth'
+import { useAppStore } from './app'
 
 export const useUserStore = defineStore('userStore', {
    state: () => ({
@@ -41,6 +42,8 @@ export const useUserStore = defineStore('userStore', {
          })
       },
       logout() {
+         const appState = useAppStore()
+         appState.removeSidebarMenu()
          removeToken()
          this.token = ''
          this.userId = ''

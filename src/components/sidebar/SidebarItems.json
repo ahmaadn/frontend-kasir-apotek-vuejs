@@ -1,0 +1,62 @@
+[
+  {
+    "label": "Home",
+    "icon": "mdi:view-dashboard-outline",
+    "url": "/",
+    "roles": ["ADM", "CSR", "WRH"]
+  },
+  {
+    "label": "Transaksi",
+    "icon": "mdi:exchange",
+    "url": "/transaction",
+    "roles": ["CSR"]
+  },
+  {
+    "label": "Pembayaran",
+    "icon": "mdi:money",
+    "url": "/payment",
+    "roles": ["CSR"]
+  },
+  {
+    "label": "Kelola Obat",
+    "icon": "mdi:box-variant-closed",
+    "url": "/medicine",
+    "roles": ["ADM", "WRH"],
+    "submenu": [
+      {
+        "label": "Daftar Obat",
+        "icon": "mdi:medicine-bottle-outline",
+        "url": ""
+      },
+      {
+        "label": "Tambah Obat",
+        "icon": "mdi:box-variant-add",
+        "url": "/add"
+      }
+    ]
+  },
+  {
+    "label": "Kelola Pegawai",
+    "icon": "mdi:people-group-outline",
+    "url": "/employee",
+    "roles": ["ADM"],
+    "submenu": [
+      {
+        "label": "Daftar Pegawai",
+        "icon": "mdi:people-outline",
+        "url": ""
+      },
+      {
+        "label": "Tambah Pegawai",
+        "icon": "mdi:people-add-outline",
+        "url": "/add"
+      }
+    ]
+  },
+  {
+    "label": "History Barang",
+    "icon": "mdi:history",
+    "url": "/history-medicine",
+    "roles": ["ADM", "WRH"]
+  }
+]

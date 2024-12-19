@@ -6,46 +6,6 @@ import SidebarLink from './SidebarLink.vue'
 import SidebarSubmenu from './SidebarSubmenu.vue'
 
 const appStore = useAppStore()
-
-const menu = [
-   {
-      icon: 'mdi:search',
-      label: 'Add Recipe',
-      url: '/',
-   },
-   {
-      icon: 'mdi:search',
-      label: 'Add Recipe',
-      url: '/',
-   },
-   {
-      icon: 'mdi:search',
-      label: 'Account',
-      submenu: [
-         {
-            icon: 'mdi:search',
-            label: 'Change Password',
-            url: '/',
-         },
-         {
-            icon: 'mdi:search',
-            label: 'Edit Profile',
-            submenu: [
-               {
-                  icon: 'mdi:search',
-                  label: 'Change Password',
-                  url: '/',
-               },
-               {
-                  icon: 'mdi:search',
-                  label: 'Edit Profile',
-                  url: '/',
-               },
-            ],
-         },
-      ],
-   },
-]
 </script>
 
 <template>
@@ -75,18 +35,18 @@ const menu = [
          <div class="h-full">
             <ul class="sidebar-menu menu">
                <li
-                  v-for="(link, index) in menu"
+                  v-for="(link, index) in appStore.getSidebarMenu"
                   v-bind:key="index"
                   class="min-h-10 items-start text-base font-medium"
                >
                   <SidebarSubmenu
-                     v-if="link.submenu"
+                     v-if="link.submenu && link.submenu.length != 0"
                      :icon="link.icon"
                      :label="link.label"
                      :submenu="link.submenu"
                   >
                   </SidebarSubmenu>
-                  <SidebarLink v-if="link.url && !link.submenu">
+                  <SidebarLink v-if="link.url && !link.submenu" :to="link.url">
                      <template v-if="link.icon" v-slot:icon>
                         <Icon :icon="link.icon" class="h-6 w-6"></Icon>
                      </template>
