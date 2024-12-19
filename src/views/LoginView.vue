@@ -84,10 +84,20 @@ const onSumbit = handleSubmit((values) => {
 
                <form action="#" class="mt-8 grid grid-cols-6 gap-6" @submit="onSumbit">
                   <div class="col-span-6">
-                     <InputForm name="email" label="Email" type="email" />
+                     <InputForm
+                        name="email"
+                        label="Email"
+                        type="email"
+                        placeholder="Masukkan Email"
+                     />
                   </div>
                   <div class="col-span-6">
-                     <InputForm name="password" label="Password" type="password" />
+                     <InputForm
+                        name="password"
+                        label="Password"
+                        type="password"
+                        placeholder="Masukkan Password"
+                     />
                   </div>
                   <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
                      <button class="btn btn-primary btn-sm w-full" :disabled="disabled">
