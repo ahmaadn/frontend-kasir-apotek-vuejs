@@ -2,7 +2,7 @@
 import { useAppStore } from '@/stores/app'
 import { useUserStore } from '@/stores/user'
 import { useRouter, useRoute } from 'vue-router'
-import { SidebarMenu, SidebarBurger } from '@/components/sidebar'
+import { SidebarMenu, SidebarBurger } from '@/components/Sidebar'
 
 const appStore = useAppStore()
 const userStote = useUserStore()
