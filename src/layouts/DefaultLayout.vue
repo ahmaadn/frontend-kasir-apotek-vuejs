@@ -34,7 +34,9 @@ const logout = async () => {
                         @click="appStore.sidebarToogle()"
                         v-model="appStore.isSidebarCollapes"
                      ></SidebarBurger>
-                     <router-link to="/" class="text-2xl font-bold">Kasir</router-link>
+                     <router-link :to="route" class="text-2xl font-bold">{{
+                        route.name
+                     }}</router-link>
                   </div>
                   <div class="navbar-end">
                      <button class="btn btn-ghost btn-sm" @click="logout">Logout</button>

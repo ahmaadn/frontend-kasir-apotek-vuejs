@@ -29,7 +29,7 @@ const onSumbit = handleSubmit((values) => {
       .then(async (res) => {
          const { message } = res.data
          toast.success(message)
-         await router.push({ name: 'home' })
+         await router.push({ name: 'Home' })
          disabled.value = false
       })
       .catch(async () => {

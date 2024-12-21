@@ -11,7 +11,7 @@ router.beforeEach(async (to, from, next) => {
 
    if (hasToken) {
       if (to.name == 'login') {
-         next({ name: 'home' })
+         next({ name: 'Home' })
          NProgress.done()
       } else {
          const userStore = useUserStore()

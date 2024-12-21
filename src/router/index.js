@@ -4,7 +4,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 const routers = [
    {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: () => import('../views/HomeView.vue'),
       meta: {
          layout: DefaultLayout,
@@ -13,7 +13,7 @@ const routers = [
    },
    {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: () => import('../views/LoginView.vue'),
       meta: {
          layout: false,
