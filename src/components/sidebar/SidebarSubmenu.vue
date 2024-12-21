@@ -6,9 +6,9 @@ const props = defineProps(['label', 'icon', 'submenu'])
 </script>
 
 <template>
-   <details open class="sidebar-submenu w-full rounded hover:bg-base-300">
-      <summary class="px-2 after:mr-2">
-         <Icon :icon="props.icon" class="h-6 w-6"></Icon>
+   <details open class="sidebar-submenu w-full rounded hover:bg-base-200">
+      <summary class="px-2 after:mr-2 group">
+         <Icon :icon="props.icon" class="h-6 w-6 group-hover:text-primary"></Icon>
          <span class="sidebar-submenu_title whitespace-nowrap">
             {{ props.label }}
          </span>
@@ -26,14 +26,7 @@ const props = defineProps(['label', 'icon', 'submenu'])
                :submenu="menu.submenu"
             >
             </SidebarSubmenu>
-            <SidebarLink v-else :to="menu.url">
-               <template v-if="menu.icon" v-slot:icon>
-                  <Icon :icon="menu.icon" class="h-6 w-6"></Icon>
-               </template>
-               <template v-slot:label>
-                  {{ menu.label }}
-               </template>
-            </SidebarLink>
+            <SidebarLink v-else :to="menu.url" :label="menu.label" :icon="menu.icon"> </SidebarLink>
          </li>
       </ul>
    </details>

@@ -25,7 +25,7 @@ const logout = async () => {
             'md:pl-72': !appStore.isSidebarCollapes,
          }"
       >
-         <nav class="w-full border-b border-gray-100 bg-white shadow-sm">
+         <nav class="w-full border-b bg-white">
             <div class="px-2">
                <div class="navbar min-h-[56px] gap-x-4">
                   <div class="navbar-start gap-2">
@@ -42,7 +42,11 @@ const logout = async () => {
                </div>
             </div>
          </nav>
-         <router-view></router-view>
+         <div class="p-6 w-full flex h-full">
+            <div class="flex-none w-full">
+               <router-view></router-view>
+            </div>
+         </div>
       </div>
    </main>
 </template>

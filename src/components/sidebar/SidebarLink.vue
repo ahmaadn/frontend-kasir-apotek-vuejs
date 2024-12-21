@@ -1,12 +1,13 @@
 <script setup>
-const props = defineProps(['to'])
+const props = defineProps(['to', 'icon', 'label'])
+import { Icon } from '@iconify/vue'
 </script>
 
 <template>
-   <router-link :to="props.to" class="w-full text-nowrap px-2">
-      <slot name="icon" />
+   <router-link :to="props.to" class="w-full text-nowrap px-2 group">
+      <Icon :icon="props.icon" class="h-6 w-6 group-hover:text-primary"></Icon>
       <span class="sidebar-link whitespace-nowrap">
-         <slot name="label" />
+         {{ props.label }}
       </span>
    </router-link>
 </template>

@@ -8,3 +8,8 @@ import { Toaster } from 'vue-sonner'
       <router-view></router-view>
    </component>
 </template>
+<style>
+:root {
+   @apply bg-base-200;
+}
+</style>

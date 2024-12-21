@@ -46,13 +46,12 @@ const appStore = useAppStore()
                      :submenu="link.submenu"
                   >
                   </SidebarSubmenu>
-                  <SidebarLink v-if="link.url && !link.submenu" :to="link.url">
-                     <template v-if="link.icon" v-slot:icon>
-                        <Icon :icon="link.icon" class="h-6 w-6"></Icon>
-                     </template>
-                     <template v-slot:label>
-                        {{ link.label }}
-                     </template>
+                  <SidebarLink
+                     v-if="link.url && !link.submenu"
+                     :to="link.url"
+                     :label="link.label"
+                     :icon="link.icon"
+                  >
                   </SidebarLink>
                </li>
             </ul>
