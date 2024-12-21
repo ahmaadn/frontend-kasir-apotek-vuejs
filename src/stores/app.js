@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import Cookies from 'js-cookie'
 import { useUserStore } from './user'
-import sidebarItems from '@/components/sidebar/SidebarItems.json'
+import sidebarItems from '@/components/Sidebar/SidebarItems.json'
 
 export const useAppStore = defineStore('appStore', {
    state: () => ({
