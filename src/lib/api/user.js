@@ -7,3 +7,10 @@ export function loginWithJWT(data, config = {}) {
       ...config,
    })
 }
+
+export function getUserList(config = {}) {
+   return request('/user', {
+      method: 'GET',
+      config,
+   })
+}

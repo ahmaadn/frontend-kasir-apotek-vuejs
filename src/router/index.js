@@ -7,6 +7,7 @@ const routers = [
       name: 'Home',
       component: () => import('../views/HomeView.vue'),
       meta: {
+         roles: ['ADM', 'CSR', 'WRH'],
          layout: DefaultLayout,
          requiresAuth: true,
       },
@@ -18,6 +19,16 @@ const routers = [
       meta: {
          layout: false,
          requiresAuth: false,
+      },
+   },
+   {
+      path: '/employee',
+      name: 'Daftar Pegawai',
+      component: () => import('../views/EmployeeView.vue'),
+      meta: {
+         roles: ['ADM'],
+         layout: DefaultLayout,
+         requiresAuth: true,
       },
    },
 ]

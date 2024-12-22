@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.vue3-easy-data-table {
+  --easy-table-border: inherit;
+  --easy-table-header-height: 40px;
+  --easy-table-header-font-color: oklch(var(--bc) / 0.6);
+
+  --easy-table-body-row-height: 40px;
+}
+
+.vue3-easy-data-table {
+  @apply shadow border;
+}
+.vue3-easy-data-table > .vue3-easy-data-table__main {
+  @apply rounded-t;
+}
+
+.vue3-easy-data-table:not(:has(.vue3-easy-data-table__footer)) > .vue3-easy-data-table__main,
+.vue3-easy-data-table > .vue3-easy-data-table__footer {
+  @apply rounded-b;
+}
+
+.vue3-easy-data-table > .vue3-easy-data-table__main .vue3-easy-data-table__header {
+  @apply border-t;
+}
