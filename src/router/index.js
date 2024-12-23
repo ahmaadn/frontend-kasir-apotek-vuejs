@@ -9,7 +9,6 @@ const routers = [
       meta: {
          roles: ['ADM', 'CSR', 'WRH'],
          layout: DefaultLayout,
-         requiresAuth: true,
          headerTitle: 'Home',
       },
    },
@@ -19,7 +18,16 @@ const routers = [
       component: () => import('../views/LoginView.vue'),
       meta: {
          layout: false,
-         requiresAuth: false,
+         noRequiresAuth: true,
+      },
+   },
+   {
+      path: '/404',
+      name: '404',
+      component: () => import('../views/404View.vue'),
+      meta: {
+         layout: false,
+         noRequiresAuth: true,
       },
    },
    {
@@ -29,7 +37,6 @@ const routers = [
       meta: {
          roles: ['ADM'],
          layout: DefaultLayout,
-         requiresAuth: true,
          headerTitle: 'Daftar Pegawai',
       },
    },

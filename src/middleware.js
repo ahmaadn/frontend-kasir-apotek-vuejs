@@ -5,36 +5,54 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { useAppStore } from '@/stores/app'
 
+const whiteList = ['/404']
+
+function handlePermission(to, next) {
+   const userStore = useUserStore()
+   const appStore = useAppStore()
+
+   if (to.meta.roles && to.meta.roles.includes(userStore.getRole)) {
+      appStore.generateSidebarMenu()
+      next()
+   } else {
+      next({ name: '404' })
+   }
+}
+
+function handleAuthenticatedUser(to, next) {
+   if (whiteList.includes(to.path)) {
+      next()
+   } else if (to.name === 'Login') {
+      next({ name: 'Home' })
+   } else {
+      try {
+         handlePermission(to, next)
+      } catch (e) {
+         const userStore = useUserStore()
+         userStore.logout()
+         console.error(e) // for debug
+         next({ name: 'Login' })
+      }
+   }
+   NProgress.done()
+}
+
+function handleUnauthenticatedUser(to, next) {
+   if (to.meta.noRequiresAuth) {
+      next()
+   } else {
+      next(`/login`)
+   }
+   NProgress.done()
+}
+
 router.beforeEach(async (to, from, next) => {
    NProgress.start()
    const hasToken = getToken()
 
    if (hasToken) {
-      if (to.name == 'login') {
-         next({ name: 'Home' })
-         NProgress.done()
-      } else {
-         const userStore = useUserStore()
-         const appStore = useAppStore()
-         try {
-            // await user.getInfo()
-            appStore.generateSidebarMenu()
-            next()
-            NProgress.done()
-         } catch (e) {
-            userStore.logout()
-            console.error(e)
-            next({ name: 'login' })
-            NProgress.done()
-         }
-      }
+      handleAuthenticatedUser(to, next)
    } else {
-      if (to.meta.requiresAuth) {
-         next(`/login?redirect=${to.path}`)
-         NProgress.done()
-      } else {
-         next()
-         NProgress.done()
-      }
+      handleUnauthenticatedUser(to, next)
    }
 })
