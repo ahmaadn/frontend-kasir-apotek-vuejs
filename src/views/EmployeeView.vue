@@ -1,6 +1,7 @@
 <script setup>
 import SelectedCardForm from '@/components/Form/SelectedCardForm.vue'
 import { getUserList } from '@/lib/api/user'
+import { useUserStore } from '@/stores/user'
 import { onMounted, ref } from 'vue'
 import { toast } from 'vue-sonner'
 
@@ -9,12 +10,13 @@ const employeeList = ref([])
 const selected = ref(null)
 const search = ref('')
 const filterRole = ref([])
+const userStore = useUserStore()
 
 const headers = [
-   { text: 'Nama', value: 'fullname', sortable: true, width: 200 },
+   { text: 'Nama', value: 'fullname', sortable: true, fixed: false, width: 300 },
    { text: 'Email', value: 'email' },
    { text: 'Userphone', value: 'userphone' },
-   { text: 'Role', value: 'role.rolename', sortable: true, width: 200 },
+   { text: 'Role', value: 'role', sortable: true, width: 200 },
    { text: 'Aksi', value: 'action' },
 ]
 
@@ -98,14 +100,27 @@ onMounted(loadEmployeeList)
                style="width: 100px; height: 80px"
             />
          </template>
-         <template #item-role.rolename="{ role }">
+         <template #item-fullname="{ fullname, userid }">
+            <div class="flex flex-row gap-1">
+               <p class="font-semibold">{{ fullname }}</p>
+               <span
+                  v-if="userid == userStore.getUserId"
+                  class="badge badge-sm badge-outline badge-primary bg-primary/20"
+                  >Current
+               </span>
+            </div>
+         </template>
+
+         <template #item-role="{ role }">
             <span class="badge badge-sm badge-outline" :class="budgeColor[role.roleid]">{{
                role.rolename
             }}</span>
          </template>
-         <template #item-action>
+         <template #item-action="{ userid }">
             <div class="flex flex-row gap-2">
-               <button class="btn btn-xs btn-error">delete</button>
+               <button class="btn btn-xs btn-error" v-if="userid != userStore.getUserId">
+                  delete
+               </button>
                <button class="btn btn-xs btn-warning">Update</button>
             </div>
          </template>
