@@ -1,27 +1,5 @@
 <script setup>
 import StatCard from '@/components/StatCard.vue'
-
-// import type { Header, Item, ClickRowArgument } from "vue3-easy-data-table";
-
-// omit
-
-const showRow = (item) => {
-   document.getElementById('row-clicked').innerHTML = JSON.stringify(item)
-}
-
-const headers = [
-   { text: 'PLAYER', value: 'player' },
-   { text: 'Action', value: 'action' },
-]
-
-const items = [
-   {
-      player: 'Stephen Curry',
-   },
-   {
-      player: 'Lebron James',
-   },
-]
 </script>
 <template>
    <main class="flex gap-4 flex-col">
