@@ -34,8 +34,8 @@ const logout = async () => {
                         @click="appStore.sidebarToogle()"
                         v-model="appStore.isSidebarCollapes"
                      ></SidebarBurger>
-                     <router-link :to="route" class="text-2xl font-bold">{{
-                        route.name
+                     <router-link :to="route" class="md:text-2xl font-bold text-lg text-nowrap">{{
+                        route.meta.headerTitle || router.name
                      }}</router-link>
                   </div>
                   <div class="navbar-end">
@@ -44,7 +44,7 @@ const logout = async () => {
                </div>
             </div>
          </nav>
-         <div class="p-6 w-full flex h-full">
+         <div class="p-2 md:p-6 w-full flex h-full">
             <div class="flex-none w-full">
                <router-view></router-view>
             </div>

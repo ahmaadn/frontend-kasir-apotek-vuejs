@@ -10,6 +10,7 @@ const routers = [
          roles: ['ADM', 'CSR', 'WRH'],
          layout: DefaultLayout,
          requiresAuth: true,
+         headerTitle: 'Home',
       },
    },
    {
@@ -23,12 +24,13 @@ const routers = [
    },
    {
       path: '/employee',
-      name: 'Daftar Pegawai',
+      name: 'Employee',
       component: () => import('../views/EmployeeView.vue'),
       meta: {
          roles: ['ADM'],
          layout: DefaultLayout,
          requiresAuth: true,
+         headerTitle: 'Daftar Pegawai',
       },
    },
 ]
