@@ -11,7 +11,7 @@ const route = useRoute()
 
 const logout = async () => {
    userStote.logout()
-   await router.push({ name: 'login', query: { redirect: route.fullPath } })
+   await router.push({ name: 'Login', query: { redirect: route.fullPath } })
 }
 </script>
 
