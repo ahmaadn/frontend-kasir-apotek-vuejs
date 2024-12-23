@@ -49,9 +49,8 @@ onMounted(loadEmployeeList)
       <div>
          <button class="btn btn-success btn-sm text-white">Tambah Pegawai</button>
       </div>
-      <div class="flex md:flex-row flex-col gap-4">
-         <InputForm name="search" placeholder="Cari nama pegawai" class="max-w-sm"></InputForm>
-         <SelectedCardForm></SelectedCardForm>
+      <div class="flex md:flex-row gap-4 justify-between flex-col">
+         <SelectedCardForm label="Filter Role" :items="['Admin', 'Pengelola Gudang', 'Kasir']" />
       </div>
       <EasyDataTable
          :headers="headers"
