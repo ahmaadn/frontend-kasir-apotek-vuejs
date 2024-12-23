@@ -18,7 +18,7 @@ const props = defineProps({
 </script>
 
 <template>
-   <div class="form-control w-full">
+   <div class="form-control">
       <div class="label text-lg font-semibold" v-if="props.label">
          <span class="label-text">{{ props.label }}</span>
          <span class="label-text-alt text-error" v-if="props.showError">
