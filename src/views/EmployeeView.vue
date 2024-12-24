@@ -20,12 +20,6 @@ const headers = [
    { text: 'Aksi', value: 'action' },
 ]
 
-const budgeColor = {
-   ADM: 'badge-primary bg-primary/20',
-   CSR: 'badge-secondary bg-secondary/20',
-   WRH: 'badge-accent bg-accent/20',
-}
-
 const onSelected = (item) => {
    selected.value = item
 }
@@ -110,11 +104,16 @@ onMounted(loadEmployeeList)
                </span>
             </div>
          </template>
-
          <template #item-role="{ role }">
-            <span class="badge badge-sm badge-outline" :class="budgeColor[role.roleid]">{{
-               role.rolename
-            }}</span>
+            <span
+               class="badge badge-sm badge-outline"
+               :class="{
+                  'badge-primary bg-primary/20': role.roleid == 'ADM',
+                  'badge-secondary bg-secondary/20': role.roleid == 'CSR',
+                  'badge-accent bg-accent/20': role.roleid == 'WRH',
+               }"
+               >{{ role.rolename }}</span
+            >
          </template>
          <template #item-action="{ userid }">
             <div class="flex flex-row gap-2">
