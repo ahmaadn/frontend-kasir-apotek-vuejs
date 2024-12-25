@@ -24,7 +24,7 @@ const appStore = useAppStore()
                class="sidebar-title flex flex-1 items-center overflow-hidden p-2 text-2xl font-bold leading-4"
             >
                <Icon icon="mdi:cart" size="2rem" class="w-8 overflow-hidden rounded-sm" />
-               <h1 class="pl-2">Kasir</h1>
+               <h1 class="pl-2 text-2xl font-bold">Kasir</h1>
             </router-link>
             <SidebarBurger
                class="relative h-10 min-h-10 w-10 min-w-10 flex-none"
