@@ -18,7 +18,7 @@ const props = defineProps(['name', 'label', 'showError', 'class', 'iconLeft', 'i
          </span>
       </div>
       <label
-         class="group input input-bordered flex items-center gap-2 grow rounded-md input-sm h-10 leading-10 input-primary"
+         class="group input input-bordered flex items-center gap-2 grow rounded-md input-sm h-10 shadow"
          v-bind:for="props.name"
       >
          <Icon v-if="props.iconLeft" :icon="props.iconLeft" width="16" height="16"></Icon>
