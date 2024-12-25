@@ -30,22 +30,34 @@ const routers = [
             meta: {
                roles: ['ADM', 'CSR', 'WRH'],
                layout: DefaultLayout,
-               headerTitle: 'Home',
+               title: 'Home',
             },
          },
       ],
    },
    {
-      path: '/employee',
+      path: '/employee/',
       component: DefaultLayout,
+      meta: {
+         title: 'Pegawai',
+      },
       children: [
          {
             path: '',
             name: 'Employee',
-            component: () => import('@/views/employee/view.vue'),
+            component: () => import('@/views/employee/employee-view.vue'),
             meta: {
                roles: ['ADM'],
-               headerTitle: 'Daftar Pegawai',
+               title: 'Daftar Pegawai',
+            },
+         },
+         {
+            path: 'add',
+            name: 'AddEmployee',
+            component: () => import('@/views/employee/add-view.vue'),
+            meta: {
+               roles: ['ADM'],
+               title: 'Tambah Pegawai',
             },
          },
       ],

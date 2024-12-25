@@ -14,3 +14,11 @@ export function getUserList(config = {}) {
       config,
    })
 }
+
+export function createUser(data, config = {}) {
+   return request('/user/add', {
+      method: 'POST',
+      data,
+      ...config,
+   })
+}
