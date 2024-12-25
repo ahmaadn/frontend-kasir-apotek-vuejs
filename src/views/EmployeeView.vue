@@ -2,12 +2,11 @@
 import 'vue3-easy-data-table/dist/style.css'
 import '@/assets/css/table.css'
 
-import CheckboxCardForm from '@/components/Form/CheckboxCardForm.vue'
-import InputForm from '@/components/Form/InputForm.vue'
+import { InputForm, CheckboxCardForm, SelectForm } from '@/components/Form'
 import { Icon } from '@iconify/vue'
 import { getUserList } from '@/lib/api/user'
 import { useUserStore } from '@/stores/user'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { toast } from 'vue-sonner'
 
 const loading = ref(true)
@@ -16,6 +15,14 @@ const selected = ref(null)
 const search = ref('')
 const filterRole = ref([])
 const userStore = useUserStore()
+const dataTable = ref()
+
+const rowsPerPageOptions = computed(() => dataTable.value?.rowsPerPageOptions)
+const rowsPerPageActiveOption = computed(() => dataTable.value?.rowsPerPageActiveOption)
+
+const updateRowsPerPageSelect = (e) => {
+   dataTable.value.updateRowsPerPageActiveOption(Number(e.target.value))
+}
 
 const headers = [
    { text: 'Nama', value: 'fullname', sortable: true, fixed: false, width: 300 },
@@ -24,6 +31,12 @@ const headers = [
    { text: 'Role', value: 'role.rolename', sortable: true, width: 200 },
    { text: 'Aksi', value: 'action' },
 ]
+
+const onReset = () => {
+   dataTable.value.updateRowsPerPageActiveOption(dataTable.value?.rowsPerPageOptions[0])
+   search.value = ''
+   filterRole.value = []
+}
 
 const onSelected = (item) => {
    selected.value = item
@@ -80,15 +93,29 @@ onMounted(loadEmployeeList)
             label="Filter Role"
             class="dropdown-end"
             :items="['Admin', 'Pengelola Gudang', 'Kasir']"
-            @update:model-value="updateRole"
             v-model="filterRole"
          />
       </div>
+      <div class="flex flex-row gap-4 justify-between w-full">
+         <div class="inline-flex text-sm text-nowrap items-center gap-x-4 font-normal">
+            <span>Rows per page</span>
+            <SelectForm
+               v-model="rowsPerPageSelect"
+               :options="rowsPerPageOptions"
+               :selected="rowsPerPageActiveOption"
+               @change="updateRowsPerPageSelect"
+            ></SelectForm>
+         </div>
+         <button class="btn btn-sm btn-outline border-base-300 shadow" @click="onReset">
+            <Icon icon="mdi:filter-minus-outline" width="18" height="18" />
+            Reset
+         </button>
+      </div>
       <EasyDataTable
+         ref="dataTable"
          :headers="headers"
          :items="filteredEmployeeList()"
          :loading="loading"
-         :rows-items="[25, 50, 100]"
          hide-footer
          buttons-pagination
          show-index
@@ -107,6 +134,7 @@ onMounted(loadEmployeeList)
                </span>
             </div>
          </template>
+         <!-- eslint-disable-next-line vue/valid-v-slot -->
          <template #item-role.rolename="{ role }">
             <span
                class="badge badge-sm badge-outline"
@@ -132,5 +160,6 @@ onMounted(loadEmployeeList)
             </div>
          </template>
       </EasyDataTable>
+      {{ rowsPerPageSelect }}
    </main>
 </template>
