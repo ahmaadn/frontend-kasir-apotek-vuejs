@@ -19,22 +19,16 @@ watch(checkedValues, (value) => {
       <div
          tabindex="0"
          role="button"
-         class="m-1 border-b border-base-content/40 hover:border-base-content flex flex-row gap-x-2 items-center text-nowrap flex-nowrap justify-between"
+         class="btn btn-sm w-40 flex-nowrap btn-outline border-base-300 shadow"
+         :class="{ 'text-neutral/60 hover:text-base-100': checkedValues.length == 0 }"
       >
-         <div class="flex flex-row gap-x-2 items-center">
-            <span class="text-sm font-medium"> {{ props.label }} </span>
-            <span
-               v-if="checkedValues.length >= 1"
-               class="badge badge-sm badge-success rounded-full text-white"
-               >{{ checkedValues.length }}</span
-            >
+         <div class="text-start flex w-full">
+            <span v-if="checkedValues.length == 0">
+               {{ props.label }}
+            </span>
+            <span v-else>{{ checkedValues.length }} selected</span>
          </div>
-         <Icon
-            icon="mdi:chevron-down"
-            class="group-focus:-rotate-180 transition"
-            width="24"
-            height="24"
-         />
+         <Icon icon="mdi:chevron-down" width="24" height="24" />
       </div>
       <div tabindex="0" class="dropdown-content bg-base-100 rounded-box z-10 w-52 p-2 shadow">
          <div class="rounded border border-gray-200 bg-white">
