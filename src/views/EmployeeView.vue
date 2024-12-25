@@ -2,26 +2,40 @@
 import 'vue3-easy-data-table/dist/style.css'
 import '@/assets/css/table.css'
 
-import { InputForm, CheckboxCardForm, SelectForm } from '@/components/Form'
-import { Icon } from '@iconify/vue'
-import { getUserList } from '@/lib/api/user'
+import FilterTable from '@/components/Table/FilterTable.vue'
+import PaginationTable from '@/components/Table/PaginationTable.vue'
 import { useUserStore } from '@/stores/user'
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref } from 'vue'
+import { getUserList } from '@/lib/api/user'
 import { toast } from 'vue-sonner'
 
-const loading = ref(true)
-const employeeList = ref([])
-const selected = ref(null)
-const search = ref('')
-const filterRole = ref([])
 const userStore = useUserStore()
+const selected = ref(null)
+const loading = ref(true)
 const dataTable = ref()
+const employeeList = ref([])
 
-const rowsPerPageOptions = computed(() => dataTable.value?.rowsPerPageOptions)
-const rowsPerPageActiveOption = computed(() => dataTable.value?.rowsPerPageActiveOption)
+const options = {
+   checkbok: {
+      options: ['Admin', 'Pengelola Gudang', 'Kasir'],
+      filtered: function (items, checked) {
+         return items.filter((item) => {
+            return checked.includes(item.role.rolename)
+         })
+      },
+   },
+   search: {
+      default: '',
+      filtered: function (items, search) {
+         return items.filter((item) => {
+            return item.fullname.toLowerCase().includes(search.toLowerCase())
+         })
+      },
+   },
+}
 
-const updateRowsPerPageSelect = (e) => {
-   dataTable.value.updateRowsPerPageActiveOption(Number(e.target.value))
+const onSelected = (item) => {
+   selected.value = item
 }
 
 const headers = [
@@ -31,16 +45,6 @@ const headers = [
    { text: 'Role', value: 'role.rolename', sortable: true, width: 200 },
    { text: 'Aksi', value: 'action' },
 ]
-
-const onReset = () => {
-   dataTable.value.updateRowsPerPageActiveOption(dataTable.value?.rowsPerPageOptions[0])
-   search.value = ''
-   filterRole.value = []
-}
-
-const onSelected = (item) => {
-   selected.value = item
-}
 
 const loadEmployeeList = async () => {
    loading.value = true
@@ -56,23 +60,6 @@ const loadEmployeeList = async () => {
    loading.value = false
 }
 
-const filteredEmployeeList = () => {
-   let filtered = employeeList.value
-
-   if (search.value) {
-      filtered = filtered.filter((item) => {
-         return item.fullname.toLowerCase().includes(search.value.toLowerCase())
-      })
-   }
-
-   if (filterRole.value.length > 0) {
-      filtered = filtered.filter((item) => {
-         return filterRole.value.includes(item.role.rolename)
-      })
-   }
-   return filtered
-}
-
 onMounted(loadEmployeeList)
 </script>
 <template>
@@ -81,85 +68,63 @@ onMounted(loadEmployeeList)
          <h1 class="text-lg font-medium">{{ $route.meta.headerTitle }}</h1>
          <button class="btn btn-success btn-sm text-white">Tambah Pegawai</button>
       </div>
-      <div class="flex flex-row gap-4 justify-between w-full">
-         <InputForm
-            placeholder="Cari nama Pegawai"
-            name="search"
-            class="w-full md:max-w-sm"
-            iconLeft="akar-icons:search"
-            v-model="search"
-         ></InputForm>
-         <CheckboxCardForm
-            label="Filter Role"
-            class="dropdown-end"
-            :items="['Admin', 'Pengelola Gudang', 'Kasir']"
-            v-model="filterRole"
-         />
-      </div>
-      <div class="flex flex-row gap-4 justify-between w-full">
-         <div class="inline-flex text-sm text-nowrap items-center gap-x-4 font-normal">
-            <span>Rows per page</span>
-            <SelectForm
-               v-model="rowsPerPageSelect"
-               :options="rowsPerPageOptions"
-               :selected="rowsPerPageActiveOption"
-               @change="updateRowsPerPageSelect"
-            ></SelectForm>
-         </div>
-         <button class="btn btn-sm btn-outline border-base-300 shadow" @click="onReset">
-            <Icon icon="mdi:filter-minus-outline" width="18" height="18" />
-            Reset
-         </button>
-      </div>
-      <EasyDataTable
-         ref="dataTable"
-         :headers="headers"
-         :items="filteredEmployeeList()"
-         :loading="loading"
-         hide-footer
-         buttons-pagination
-         show-index
-         @click-row="onSelected"
+      <FilterTable
+         :options="options"
+         v-model:items="employeeList"
+         v-model:dataTable="dataTable"
+         v-slot="{ items }"
       >
-         <template #loading>
-            <span class="loading loading-infinity loading-lg"></span>
-         </template>
-         <template #item-fullname="{ fullname, userid }">
-            <div class="flex flex-row gap-1">
-               <p class="font-semibold">{{ fullname }}</p>
+         <EasyDataTable
+            ref="dataTable"
+            :headers="headers"
+            :items="items"
+            :loading="loading"
+            :rows-items="['1', '2', '3']"
+            hide-footer
+            buttons-pagination
+            show-index
+            @click-row="onSelected"
+         >
+            <template #loading>
+               <span class="loading loading-infinity loading-lg"></span>
+            </template>
+            <template #item-fullname="{ fullname, userid }">
+               <div class="flex flex-row gap-1">
+                  <p class="font-semibold">{{ fullname }}</p>
+                  <span
+                     v-if="userid == userStore.getUserId"
+                     class="badge badge-sm badge-outline badge-primary bg-primary/20"
+                     >Current
+                  </span>
+               </div>
+            </template>
+            <!-- eslint-disable-next-line vue/valid-v-slot -->
+            <template #item-role.rolename="{ role }">
                <span
-                  v-if="userid == userStore.getUserId"
-                  class="badge badge-sm badge-outline badge-primary bg-primary/20"
-                  >Current
-               </span>
-            </div>
-         </template>
-         <!-- eslint-disable-next-line vue/valid-v-slot -->
-         <template #item-role.rolename="{ role }">
-            <span
-               class="badge badge-sm badge-outline"
-               :class="{
-                  'badge-primary bg-primary/20': role.roleid == 'ADM',
-                  'badge-secondary bg-secondary/20': role.roleid == 'CSR',
-                  'badge-accent bg-accent/20': role.roleid == 'WRH',
-               }"
-               >{{ role.rolename }}</span
-            >
-         </template>
-         <template #item-action="{ userid }">
-            <div class="flex flex-row gap-2">
-               <button class="btn btn-xs btn-error" v-if="userid != userStore.getUserId">
-                  delete
-               </button>
-               <button class="btn btn-xs btn-warning">Update</button>
-            </div>
-         </template>
-         <template #empty-message>
-            <div class="flex flex-col items-center justify-center">
-               <p class="text-base font-semibold">Data Pegawai Kosong</p>
-            </div>
-         </template>
-      </EasyDataTable>
-      {{ rowsPerPageSelect }}
+                  class="badge badge-sm badge-outline"
+                  :class="{
+                     'badge-primary bg-primary/20': role.roleid == 'ADM',
+                     'badge-secondary bg-secondary/20': role.roleid == 'CSR',
+                     'badge-accent bg-accent/20': role.roleid == 'WRH',
+                  }"
+                  >{{ role.rolename }}</span
+               >
+            </template>
+            <template #item-action="{ userid }">
+               <div class="flex flex-row gap-2">
+                  <button class="btn btn-xs btn-error" v-if="userid != userStore.getUserId">
+                     delete
+                  </button>
+                  <button class="btn btn-xs btn-warning">Update</button>
+               </div>
+            </template>
+            <template #empty-message>
+               <div class="flex flex-col items-center justify-center">
+                  <p class="text-base font-semibold">Data Pegawai Kosong</p>
+               </div>
+            </template>
+         </EasyDataTable>
+      </FilterTable>
+      <PaginationTable v-model:dataTable="dataTable"></PaginationTable>
    </main>
 </template>
