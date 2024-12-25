@@ -1,6 +1,6 @@
 <script setup>
 import { Icon } from '@iconify/vue'
-import { InputForm } from '@/components/Form'
+import { FormInput } from '@/components/Form'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import * as z from 'zod'
@@ -84,7 +84,7 @@ const onSumbit = handleSubmit((values) => {
 
                <form action="#" class="mt-8 grid grid-cols-6 gap-6" @submit="onSumbit">
                   <div class="col-span-6">
-                     <InputForm
+                     <FormInput
                         name="email"
                         label="Email"
                         type="email"
@@ -92,7 +92,7 @@ const onSumbit = handleSubmit((values) => {
                      />
                   </div>
                   <div class="col-span-6">
-                     <InputForm
+                     <FormInput
                         name="password"
                         label="Password"
                         type="password"

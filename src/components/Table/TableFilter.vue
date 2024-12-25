@@ -1,5 +1,5 @@
 <script setup>
-import { InputForm, CheckboxCardForm, SelectForm } from '@/components/Form'
+import { FormInput, FormCheckboxCard, FormSelect } from '@/components/Form'
 import { Icon } from '@iconify/vue'
 import { ref, computed } from 'vue'
 
@@ -40,14 +40,14 @@ const filteredEmployeeList = () => {
 <template>
    <main class="flex flex-col gap-4">
       <div class="flex flex-row gap-4 justify-between w-full flex-wrap">
-         <InputForm
+         <FormInput
             placeholder="Cari nama Pegawai"
             name="search"
             class="w-full md:max-w-sm"
             iconLeft="mdi:search"
             v-model="search"
-         ></InputForm>
-         <CheckboxCardForm
+         />
+         <FormCheckboxCard
             label="Filter Role"
             class="dropdown-end"
             :items="['Admin', 'Pengelola Gudang', 'Kasir']"
@@ -57,11 +57,11 @@ const filteredEmployeeList = () => {
       <div class="flex flex-row gap-4 justify-between w-full flex-wrap">
          <div class="inline-flex text-sm text-nowrap items-center gap-x-4 font-normal">
             <span>Rows per page</span>
-            <SelectForm
+            <FormSelect
                :options="selectOptions"
                :selected="selected"
                @change="updateRowsPerPageSelect"
-            ></SelectForm>
+            />
          </div>
          <button class="btn btn-sm btn-outline border-base-300 shadow" @click="onReset">
             <Icon icon="mdi:filter-minus-outline" width="18" height="18" />

@@ -1,9 +1,9 @@
 <script setup>
-import { useAppStore } from '@/stores/app'
-import { Icon } from '@iconify/vue'
 import SidebarBurger from './SidebarBurger.vue'
 import SidebarLink from './SidebarLink.vue'
 import SidebarSubmenu from './SidebarSubmenu.vue'
+import { useAppStore } from '@/stores/app'
+import { Icon } from '@iconify/vue'
 
 const appStore = useAppStore()
 </script>
@@ -30,7 +30,7 @@ const appStore = useAppStore()
                class="relative h-10 min-h-10 w-10 min-w-10 flex-none"
                @click="appStore.sidebarToogle()"
                v-model="appStore.isSidebarCollapes"
-            ></SidebarBurger>
+            />
          </div>
          <div class="h-full">
             <ul class="sidebar-menu menu">
@@ -44,15 +44,13 @@ const appStore = useAppStore()
                      :icon="link.icon"
                      :label="link.label"
                      :submenu="link.submenu"
-                  >
-                  </SidebarSubmenu>
+                  />
                   <SidebarLink
                      v-if="link.url && !link.submenu"
                      :to="link.url"
                      :label="link.label"
                      :icon="link.icon"
-                  >
-                  </SidebarLink>
+                  />
                </li>
             </ul>
          </div>

@@ -22,6 +22,7 @@
       </div>
    </div>
 </template>
+
 <style scoped>
 * {
    @apply box-border;

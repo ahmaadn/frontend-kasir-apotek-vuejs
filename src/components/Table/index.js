@@ -1,2 +1,2 @@
-export { default as FilterTable } from './FilterTable.vue'
-export { default as PaginationTable } from './PaginationTable.vue'
+export { default as TableFilter } from './TableFilter.vue'
+export { default as TablePagination } from './TablePagination.vue'

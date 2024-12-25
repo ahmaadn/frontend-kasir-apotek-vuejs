@@ -3,42 +3,52 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 const routers = [
    {
-      path: '/',
-      name: 'Home',
-      component: () => import('../views/HomeView.vue'),
-      meta: {
-         roles: ['ADM', 'CSR', 'WRH'],
-         layout: DefaultLayout,
-         headerTitle: 'Home',
-      },
-   },
-   {
       path: '/login',
       name: 'Login',
-      component: () => import('../views/LoginView.vue'),
+      component: () => import('@/views/login-view.vue'),
       meta: {
-         layout: false,
          noRequiresAuth: true,
       },
    },
    {
       path: '/404',
       name: '404',
-      component: () => import('../views/404View.vue'),
+      component: () => import('@/views/404-view.vue'),
       meta: {
-         layout: false,
          noRequiresAuth: true,
       },
    },
    {
+      path: '/',
+      component: DefaultLayout,
+      redirect: '/dashboard',
+      children: [
+         {
+            path: 'dashboard',
+            name: 'Home',
+            component: () => import('@/views/home-view.vue'),
+            meta: {
+               roles: ['ADM', 'CSR', 'WRH'],
+               layout: DefaultLayout,
+               headerTitle: 'Home',
+            },
+         },
+      ],
+   },
+   {
       path: '/employee',
-      name: 'Employee',
-      component: () => import('../views/EmployeeView.vue'),
-      meta: {
-         roles: ['ADM'],
-         layout: DefaultLayout,
-         headerTitle: 'Daftar Pegawai',
-      },
+      component: DefaultLayout,
+      children: [
+         {
+            path: '',
+            name: 'Employee',
+            component: () => import('@/views/employee/view.vue'),
+            meta: {
+               roles: ['ADM'],
+               headerTitle: 'Daftar Pegawai',
+            },
+         },
+      ],
    },
 ]
 

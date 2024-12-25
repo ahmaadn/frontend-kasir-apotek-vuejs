@@ -5,7 +5,7 @@ import { Icon } from '@iconify/vue'
 
 <template>
    <router-link :to="props.to" class="w-full text-nowrap px-2 group">
-      <Icon :icon="props.icon" class="h-6 w-6 group-hover:text-primary"></Icon>
+      <Icon :icon="props.icon" class="h-6 w-6 group-hover:text-primary" />
       <span class="sidebar-link whitespace-nowrap">
          {{ props.label }}
       </span>

@@ -6,7 +6,7 @@ const props = defineProps(['title', 'value', 'icon', 'desc', 'class'])
 <template>
    <div class="stat">
       <div class="stat-figure" :class="props.class">
-         <Icon :icon="props.icon" class="inline-block h-8 w-8"></Icon>
+         <Icon :icon="props.icon" class="inline-block h-8 w-8" />
       </div>
       <div class="stat-title">{{ props.title }}</div>
       <div class="stat-value">{{ props.value }}</div>

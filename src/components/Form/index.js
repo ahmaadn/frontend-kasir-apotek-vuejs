@@ -1,3 +1,3 @@
-export { default as InputForm } from './InputForm.vue'
-export { default as CheckboxCardForm } from './CheckboxCardForm.vue'
-export { default as SelectForm } from './SelectForm.vue'
+export { default as FormInput } from './FormInput.vue'
+export { default as FormCheckboxCard } from './FormCheckboxCard.vue'
+export { default as FormSelect } from './FormSelect.vue'

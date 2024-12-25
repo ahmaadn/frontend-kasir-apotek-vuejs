@@ -26,7 +26,7 @@ const props = defineProps(['label', 'icon', 'submenu'])
                :submenu="menu.submenu"
             >
             </SidebarSubmenu>
-            <SidebarLink v-else :to="menu.url" :label="menu.label" :icon="menu.icon"> </SidebarLink>
+            <SidebarLink v-else :to="menu.url" :label="menu.label" :icon="menu.icon" />
          </li>
       </ul>
    </details>

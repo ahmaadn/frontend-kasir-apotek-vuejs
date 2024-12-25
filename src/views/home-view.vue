@@ -10,7 +10,7 @@ import StatCard from '@/components/StatCard.vue'
                value="20"
                icon="mdi:people-group-outline"
                class="text-primary"
-            ></StatCard>
+            />
          </div>
          <div class="stats shadow">
             <StatCard
@@ -19,7 +19,7 @@ import StatCard from '@/components/StatCard.vue'
                icon="mdi:currency-usd"
                class="text-success"
                desc="Bulan ini"
-            ></StatCard>
+            />
          </div>
          <div class="stats shadow">
             <StatCard
@@ -27,7 +27,7 @@ import StatCard from '@/components/StatCard.vue'
                value="25.6K"
                icon="mdi:box-variant-closed"
                class="text-warning"
-            ></StatCard>
+            />
          </div>
       </section>
    </main>

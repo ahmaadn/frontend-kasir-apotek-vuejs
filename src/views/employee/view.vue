@@ -2,7 +2,7 @@
 import 'vue3-easy-data-table/dist/style.css'
 import '@/assets/css/table.css'
 
-import { FilterTable, PaginationTable } from '@/components/Table'
+import { TableFilter, TablePagination } from '@/components/Table'
 import { useUserStore } from '@/stores/user'
 import { onMounted, ref } from 'vue'
 import { getUserList } from '@/lib/api/user'
@@ -67,7 +67,7 @@ onMounted(loadEmployeeList)
          <h1 class="text-lg font-medium">{{ $route.meta.headerTitle }}</h1>
          <button class="btn btn-success btn-sm text-white">Tambah Pegawai</button>
       </div>
-      <FilterTable
+      <TableFilter
          :options="options"
          v-model:items="employeeList"
          v-model:dataTable="dataTable"
@@ -122,7 +122,7 @@ onMounted(loadEmployeeList)
                </div>
             </template>
          </EasyDataTable>
-      </FilterTable>
-      <PaginationTable v-model:dataTable="dataTable"></PaginationTable>
+      </TableFilter>
+      <TablePagination v-model:dataTable="dataTable" />
    </main>
 </template>
