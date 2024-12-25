@@ -2,12 +2,13 @@
 import 'vue3-easy-data-table/dist/style.css'
 import '@/assets/css/table.css'
 
-import SelectedCardForm from '@/components/Form/SelectedCardForm.vue'
+import CheckboxCardForm from '@/components/Form/CheckboxCardForm.vue'
+import InputForm from '@/components/Form/InputForm.vue'
+import { Icon } from '@iconify/vue'
 import { getUserList } from '@/lib/api/user'
 import { useUserStore } from '@/stores/user'
 import { onMounted, ref } from 'vue'
 import { toast } from 'vue-sonner'
-import InputForm from '@/components/Form/InputForm.vue'
 
 const loading = ref(true)
 const employeeList = ref([])
@@ -26,10 +27,6 @@ const headers = [
 
 const onSelected = (item) => {
    selected.value = item
-}
-
-const updateRole = (role) => {
-   filterRole.value = role
 }
 
 const loadEmployeeList = async () => {
@@ -75,15 +72,16 @@ onMounted(loadEmployeeList)
          <InputForm
             placeholder="Cari nama Pegawai"
             name="search"
-            v-model="search"
             class="w-full md:max-w-sm"
             iconLeft="akar-icons:search"
+            v-model="search"
          ></InputForm>
-         <SelectedCardForm
+         <CheckboxCardForm
             label="Filter Role"
             class="dropdown-end"
             :items="['Admin', 'Pengelola Gudang', 'Kasir']"
             @update:model-value="updateRole"
+            v-model="filterRole"
          />
       </div>
       <EasyDataTable

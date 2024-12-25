@@ -1,9 +1,9 @@
 <script setup>
 import { Icon } from '@iconify/vue'
-import { watch, ref } from 'vue'
+import { watch } from 'vue'
 
-const props = defineProps(['label', 'items'])
-const checkedValues = ref([])
+const props = defineProps(['label', 'items', 'loading'])
+const checkedValues = defineModel({ required: true })
 const emit = defineEmits(['update:modelValue'])
 
 const onReset = () => {
