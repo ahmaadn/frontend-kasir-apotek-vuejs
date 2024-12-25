@@ -39,7 +39,7 @@ const filteredEmployeeList = () => {
 
 <template>
    <main class="flex flex-col gap-4">
-      <div class="flex flex-row gap-4 justify-between w-full">
+      <div class="flex flex-row gap-4 justify-between w-full flex-wrap">
          <InputForm
             placeholder="Cari nama Pegawai"
             name="search"
@@ -54,7 +54,7 @@ const filteredEmployeeList = () => {
             v-model="checked"
          />
       </div>
-      <div class="flex flex-row gap-4 justify-between w-full">
+      <div class="flex flex-row gap-4 justify-between w-full flex-wrap">
          <div class="inline-flex text-sm text-nowrap items-center gap-x-4 font-normal">
             <span>Rows per page</span>
             <SelectForm
