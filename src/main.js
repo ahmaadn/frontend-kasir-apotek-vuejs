@@ -10,7 +10,6 @@ import router from './router'
 import './middleware'
 
 import Vue3EasyDataTable from 'vue3-easy-data-table'
-import 'vue3-easy-data-table/dist/style.css'
 
 const app = createApp(App)
 const pinia = createPinia()

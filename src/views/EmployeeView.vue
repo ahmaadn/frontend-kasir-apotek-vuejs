@@ -1,9 +1,13 @@
 <script setup>
+import 'vue3-easy-data-table/dist/style.css'
+import '@/assets/css/table.css'
+
 import SelectedCardForm from '@/components/Form/SelectedCardForm.vue'
 import { getUserList } from '@/lib/api/user'
 import { useUserStore } from '@/stores/user'
 import { onMounted, ref } from 'vue'
 import { toast } from 'vue-sonner'
+import InputForm from '@/components/Form/InputForm.vue'
 
 const loading = ref(true)
 const employeeList = ref([])
@@ -16,7 +20,7 @@ const headers = [
    { text: 'Nama', value: 'fullname', sortable: true, fixed: false, width: 300 },
    { text: 'Email', value: 'email' },
    { text: 'Userphone', value: 'userphone' },
-   { text: 'Role', value: 'role', sortable: true, width: 200 },
+   { text: 'Role', value: 'role.rolename', sortable: true, width: 200 },
    { text: 'Aksi', value: 'action' },
 ]
 
@@ -63,20 +67,23 @@ onMounted(loadEmployeeList)
 </script>
 <template>
    <main class="bg-base-100 flex flex-col gap-4 p-4 shadow border rounded">
-      <div>
+      <div class="flex flex-row justify-between items-center gap-4">
+         <h1 class="text-lg font-medium">{{ $route.meta.headerTitle }}</h1>
          <button class="btn btn-success btn-sm text-white">Tambah Pegawai</button>
       </div>
-      <div class="flex md:flex-row gap-4 justify-between flex-col">
+      <div class="flex flex-row gap-4 justify-between w-full">
+         <InputForm
+            placeholder="Cari nama Pegawai"
+            name="search"
+            v-model="search"
+            class="w-full md:max-w-sm"
+            iconLeft="akar-icons:search"
+         ></InputForm>
          <SelectedCardForm
             label="Filter Role"
+            class="dropdown-end"
             :items="['Admin', 'Pengelola Gudang', 'Kasir']"
             @update:model-value="updateRole"
-         />
-         <input
-            type="text"
-            placeholder="Cari nama Pegawai"
-            class="input input-sm input-bordered md:max-w-xs w-full grow rounded-md"
-            v-model="search"
          />
       </div>
       <EasyDataTable
@@ -84,15 +91,13 @@ onMounted(loadEmployeeList)
          :items="filteredEmployeeList()"
          :loading="loading"
          :rows-items="[25, 50, 100]"
+         hide-footer
          buttons-pagination
          show-index
          @click-row="onSelected"
       >
          <template #loading>
-            <img
-               src="https://i.pinimg.com/originals/94/fd/2b/94fd2bf50097ade743220761f41693d5.gif"
-               style="width: 100px; height: 80px"
-            />
+            <span class="loading loading-infinity loading-lg"></span>
          </template>
          <template #item-fullname="{ fullname, userid }">
             <div class="flex flex-row gap-1">
@@ -104,7 +109,7 @@ onMounted(loadEmployeeList)
                </span>
             </div>
          </template>
-         <template #item-role="{ role }">
+         <template #item-role.rolename="{ role }">
             <span
                class="badge badge-sm badge-outline"
                :class="{
