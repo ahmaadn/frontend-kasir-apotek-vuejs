@@ -2,8 +2,7 @@
 import 'vue3-easy-data-table/dist/style.css'
 import '@/assets/css/table.css'
 
-import FilterTable from '@/components/Table/FilterTable.vue'
-import PaginationTable from '@/components/Table/PaginationTable.vue'
+import { FilterTable, PaginationTable } from '@/components/Table'
 import { useUserStore } from '@/stores/user'
 import { onMounted, ref } from 'vue'
 import { getUserList } from '@/lib/api/user'
@@ -79,7 +78,6 @@ onMounted(loadEmployeeList)
             :headers="headers"
             :items="items"
             :loading="loading"
-            :rows-items="['1', '2', '3']"
             hide-footer
             buttons-pagination
             show-index
