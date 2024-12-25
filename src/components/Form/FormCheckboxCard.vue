@@ -2,7 +2,15 @@
 import { Icon } from '@iconify/vue'
 import { watch } from 'vue'
 
-const props = defineProps(['label', 'items', 'loading'])
+const props = defineProps({
+   label: String,
+   items: Array,
+   loading: {
+      type: Boolean,
+      default: false,
+   },
+})
+
 const checkedValues = defineModel({ required: true })
 const emit = defineEmits(['update:modelValue'])
 
@@ -53,6 +61,7 @@ watch(checkedValues, (value) => {
                         v-model="checkedValues"
                         :id="item"
                         :value="item"
+                        :disabled="loading"
                      />
                      <span class="label-text text-start w-full">{{ item }}</span>
                   </label>

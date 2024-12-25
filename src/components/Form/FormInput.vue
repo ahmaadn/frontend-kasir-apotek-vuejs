@@ -6,7 +6,17 @@ defineOptions({
    inheritAttrs: false,
 })
 
-const props = defineProps(['name', 'label', 'showError', 'class', 'iconLeft', 'iconRight'])
+const props = defineProps({
+   name: {
+      type: String,
+      require: true,
+   },
+   label: String,
+   showError: { type: Boolean, default: true },
+   class: String,
+   iconLeft: String,
+   iconRight: String,
+})
 </script>
 
 <template>

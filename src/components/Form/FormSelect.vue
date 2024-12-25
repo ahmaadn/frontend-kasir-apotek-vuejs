@@ -1,9 +1,23 @@
 <script setup>
 import { ErrorMessage, Field } from 'vee-validate'
-const props = defineProps(['options', 'selected', 'hideLabel', 'label', 'showError', 'as'])
 
 defineOptions({
    inheritAttrs: false,
+})
+
+const props = defineProps({
+   label: String,
+   options: Array,
+   selected: [String, Number],
+   hideLabel: {
+      type: Boolean,
+      default: false,
+   },
+   showError: {
+      type: Boolean,
+      default: true,
+   },
+   as: String,
 })
 </script>
 

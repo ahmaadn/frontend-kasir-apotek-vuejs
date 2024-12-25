@@ -16,7 +16,7 @@ const router = useRouter()
 const { handleSubmit } = useForm({
    validationSchema: toTypedSchema(
       z.object({
-         email: z.string().max(100).email(),
+         email: z.string().max(100).email('This is not a valid email.'),
          password: z.string().min(8).max(100),
       }),
    ),

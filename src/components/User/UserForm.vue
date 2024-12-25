@@ -46,33 +46,19 @@ onMounted(() => {
 <template>
    <form @submit="onSumbit">
       <div class="flex flex-col gap-4">
-         <FormInput
-            name="fullname"
-            label="Fullname"
-            type="text"
-            placeholder="Masukkan Nama"
-            :show-error="true"
-         />
-         <FormInput
-            name="email"
-            label="Email"
-            type="email"
-            placeholder="Masukkan Email"
-            :show-error="true"
-         />
+         <FormInput name="fullname" label="Fullname" type="text" placeholder="Masukkan Nama" />
+         <FormInput name="email" label="Email" type="email" placeholder="Masukkan Email" />
          <FormInput
             name="password"
             label="Password"
             type="password"
             placeholder="Masukkan password"
-            :show-error="true"
          />
          <FormInput
             name="userphone"
             label="Userphone"
             type="Userphone"
             placeholder="Masukkan Userphone"
-            :show-error="true"
          />
          <FormSelect name="roleid" label="Role" :options="options" />
       </div>

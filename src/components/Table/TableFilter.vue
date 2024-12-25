@@ -3,7 +3,13 @@ import { FormInput, FormCheckboxCard, FormSelect } from '@/components/Form'
 import { Icon } from '@iconify/vue'
 import { ref, computed } from 'vue'
 
-const props = defineProps(['options'])
+const props = defineProps({
+   options: {
+      type: Object,
+      required: true,
+   },
+})
+
 const items = defineModel('items', { required: true })
 const dataTable = defineModel('dataTable', { required: true })
 
@@ -41,11 +47,12 @@ const filteredEmployeeList = () => {
    <main class="flex flex-col gap-4">
       <div class="flex flex-row gap-4 justify-between w-full flex-wrap">
          <FormInput
-            placeholder="Cari nama Pegawai"
             name="search"
             class="w-full md:max-w-sm"
-            iconLeft="mdi:search"
+            placeholder="Cari nama Pegawai"
+            icon-left="mdi:search"
             v-model="search"
+            :show-error="false"
          />
          <FormCheckboxCard
             label="Filter Role"
@@ -60,6 +67,8 @@ const filteredEmployeeList = () => {
             <FormSelect
                :options="selectOptions"
                :selected="selected"
+               :hide-label="true"
+               as="select"
                @change="updateRowsPerPageSelect"
             />
          </div>

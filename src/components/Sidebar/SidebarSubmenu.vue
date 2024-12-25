@@ -2,7 +2,11 @@
 import { Icon } from '@iconify/vue'
 import SidebarLink from './SidebarLink.vue'
 
-const props = defineProps(['label', 'icon', 'submenu'])
+const props = defineProps({
+   label: String,
+   icon: String,
+   submenu: Object,
+})
 </script>
 
 <template>

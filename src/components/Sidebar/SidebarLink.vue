@@ -1,6 +1,11 @@
 <script setup>
-const props = defineProps(['to', 'icon', 'label'])
 import { Icon } from '@iconify/vue'
+
+const props = defineProps({
+   to: String,
+   icon: String,
+   label: String,
+})
 </script>
 
 <template>
