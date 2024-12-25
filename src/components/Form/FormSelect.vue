@@ -6,6 +6,7 @@ defineOptions({
 })
 
 const props = defineProps({
+   name: String,
    label: String,
    options: Array,
    selected: [String, Number],
@@ -39,6 +40,7 @@ const props = defineProps({
          as="select"
          class="select select-bordered w-full border-base-300 select-sm shadow rounded min-w-24"
          v-bind="$attrs"
+         :name="props.name"
          :value="props.selected || 'empty'"
       >
          <option
