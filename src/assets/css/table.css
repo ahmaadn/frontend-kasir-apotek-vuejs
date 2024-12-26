@@ -1,9 +1,9 @@
 .vue3-easy-data-table {
   --easy-table-border: inherit;
-  --easy-table-header-height: 40px;
+  --easy-table-header-height: 50px;
   --easy-table-header-font-color: oklch(var(--bc) / 0.6);
 
-  --easy-table-body-row-height: 40px;
+  --easy-table-body-row-height: 50px;
 }
 
 .vue3-easy-data-table {

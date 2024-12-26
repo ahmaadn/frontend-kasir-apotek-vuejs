@@ -58,75 +58,77 @@ const loadEmployeeList = async () => {
 onMounted(loadEmployeeList)
 </script>
 <template>
-   <main class="bg-base-100 flex flex-col gap-4 p-4 shadow border rounded">
-      <div class="flex flex-row justify-between items-center gap-4">
-         <h1 class="text-lg font-medium">{{ $route.meta.headerTitle }}</h1>
-         <router-link :to="{ name: 'AddEmployee' }" class="btn btn-success btn-sm text-white"
-            >Tambah Pegawai</router-link
-         >
+   <main class="bg-base-100 shadow border rounded divide-y">
+      <div class="py-4 px-6 flex flex-row justify-between items-center">
+         <h1 class="md:text-2xl text-lg font-medium">Daftar Pegawai Saat Ini</h1>
+         <router-link :to="{ name: 'AddEmployee' }" class="btn btn-success btn-sm text-white">
+            Tambah Pegawai
+         </router-link>
       </div>
-      <TableFilter
-         :options="options"
-         v-model:items="employeeList"
-         v-model:dataTable="dataTable"
-         v-slot="{ items }"
-      >
-         <EasyDataTable
-            ref="dataTable"
-            :headers="headers"
-            :items="items"
-            :loading="loading"
-            hide-footer
-            buttons-pagination
-            show-index
+      <div class="p-6 space-y-6">
+         <TableFilter
+            :options="options"
+            v-model:items="employeeList"
+            v-model:dataTable="dataTable"
+            v-slot="{ items }"
          >
-            <template #loading>
-               <span class="loading loading-infinity loading-lg"></span>
-            </template>
-            <template #item-fullname="{ fullname, userid }">
-               <div class="flex flex-row gap-1">
-                  <p class="font-semibold">{{ fullname }}</p>
+            <EasyDataTable
+               ref="dataTable"
+               :headers="headers"
+               :items="items"
+               :loading="loading"
+               hide-footer
+               buttons-pagination
+               show-index
+            >
+               <template #loading>
+                  <span class="loading loading-infinity loading-lg"></span>
+               </template>
+               <template #item-fullname="{ fullname, userid }">
+                  <div class="flex flex-row gap-1">
+                     <p class="font-semibold">{{ fullname }}</p>
+                     <span
+                        v-if="userid == userStore.getUserId"
+                        class="badge badge-sm badge-outline badge-primary bg-primary/20"
+                        >Current
+                     </span>
+                  </div>
+               </template>
+               <!-- eslint-disable-next-line vue/valid-v-slot -->
+               <template #item-role.rolename="{ role }">
                   <span
-                     v-if="userid == userStore.getUserId"
-                     class="badge badge-sm badge-outline badge-primary bg-primary/20"
-                     >Current
-                  </span>
-               </div>
-            </template>
-            <!-- eslint-disable-next-line vue/valid-v-slot -->
-            <template #item-role.rolename="{ role }">
-               <span
-                  class="badge badge-sm badge-outline"
-                  :class="{
-                     'badge-primary bg-primary/20': role.roleid == 'ADM',
-                     'badge-secondary bg-secondary/20': role.roleid == 'CSR',
-                     'badge-accent bg-accent/20': role.roleid == 'WRH',
-                  }"
-                  >{{ role.rolename }}</span
-               >
-            </template>
-            <template #item-action="{ userid }">
-               <div class="flex flex-row gap-2">
-                  <UserDeleteDialog
-                     :userid="userid"
-                     v-if="userid != userStore.getUserId"
-                     @on-success="loadEmployeeList"
-                  />
-
-                  <router-link
-                     :to="{ name: 'UpdateEmployee', params: { id: userid } }"
-                     class="btn btn-xs btn-warning"
-                     >Update</router-link
+                     class="badge badge-sm badge-outline"
+                     :class="{
+                        'badge-primary bg-primary/20': role.roleid == 'ADM',
+                        'badge-secondary bg-secondary/20': role.roleid == 'CSR',
+                        'badge-accent bg-accent/20': role.roleid == 'WRH',
+                     }"
+                     >{{ role.rolename }}</span
                   >
-               </div>
-            </template>
-            <template #empty-message>
-               <div class="flex flex-col items-center justify-center">
-                  <p class="text-base font-semibold">Data Pegawai Kosong</p>
-               </div>
-            </template>
-         </EasyDataTable>
-      </TableFilter>
-      <TablePagination v-model:dataTable="dataTable" />
+               </template>
+               <template #item-action="{ userid }">
+                  <div class="flex flex-row gap-2">
+                     <UserDeleteDialog
+                        :userid="userid"
+                        v-if="userid != userStore.getUserId"
+                        @on-success="loadEmployeeList"
+                     />
+
+                     <router-link
+                        :to="{ name: 'UpdateEmployee', params: { id: userid } }"
+                        class="btn btn-xs btn-warning"
+                        >Update</router-link
+                     >
+                  </div>
+               </template>
+               <template #empty-message>
+                  <div class="flex flex-col items-center justify-center">
+                     <p class="text-base font-semibold">Data Pegawai Kosong</p>
+                  </div>
+               </template>
+            </EasyDataTable>
+         </TableFilter>
+         <TablePagination v-model:dataTable="dataTable" />
+      </div>
    </main>
 </template>

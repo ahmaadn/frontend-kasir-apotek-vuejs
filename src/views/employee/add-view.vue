@@ -43,13 +43,19 @@ const onSumbit = form.handleSubmit(async (values) => {
 </script>
 
 <template>
-   <main class="bg-base-100 p-4 shadow border rounded">
-      <h1 class="text-lg font-medium">Tambah Pegawai</h1>
-      <BreadcrumbsNav />
-      <UserForm @submit="onSumbit" :options-role="options">
-         <button class="btn btn-sm w-full btn-success shadow mt-3 text-white" :disabled="disabled">
-            Tambah
-         </button>
-      </UserForm>
+   <main class="bg-base-100 shadow border rounded divide-y">
+      <div class="py-4 px-6">
+         <h1 class="md:text-2xl text-lg font-medium">Tambah Pegawai</h1>
+      </div>
+      <div class="p-6">
+         <UserForm @submit="onSumbit" :options-role="options">
+            <button
+               class="btn btn-sm w-full btn-success shadow mt-3 text-white"
+               :disabled="disabled"
+            >
+               Tambah
+            </button>
+         </UserForm>
+      </div>
    </main>
 </template>
