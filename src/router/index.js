@@ -60,6 +60,16 @@ const routers = [
                title: 'Tambah Pegawai',
             },
          },
+         {
+            path: 'update/:id',
+            name: 'UpdateEmployee',
+            component: () => import('@/views/employee/update-view.vue'),
+            props: true,
+            meta: {
+               roles: ['ADM'],
+               title: 'Update Pegawai',
+            },
+         },
       ],
    },
 ]

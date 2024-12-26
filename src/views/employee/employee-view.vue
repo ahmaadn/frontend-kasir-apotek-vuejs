@@ -65,7 +65,9 @@ onMounted(loadEmployeeList)
    <main class="bg-base-100 flex flex-col gap-4 p-4 shadow border rounded">
       <div class="flex flex-row justify-between items-center gap-4">
          <h1 class="text-lg font-medium">{{ $route.meta.headerTitle }}</h1>
-         <button class="btn btn-success btn-sm text-white">Tambah Pegawai</button>
+         <router-link :to="{ name: 'AddEmployee' }" class="btn btn-success btn-sm text-white"
+            >Tambah Pegawai</router-link
+         >
       </div>
       <TableFilter
          :options="options"
@@ -113,7 +115,11 @@ onMounted(loadEmployeeList)
                   <button class="btn btn-xs btn-error" v-if="userid != userStore.getUserId">
                      delete
                   </button>
-                  <button class="btn btn-xs btn-warning">Update</button>
+                  <router-link
+                     :to="{ name: 'UpdateEmployee', params: { id: userid } }"
+                     class="btn btn-xs btn-warning"
+                     >Update</router-link
+                  >
                </div>
             </template>
             <template #empty-message>
