@@ -9,7 +9,7 @@ const props = defineProps({
    name: String,
    label: String,
    options: Array,
-   selected: [String, Number],
+   selected: String || Number,
    hideLabel: {
       type: Boolean,
       default: false,
@@ -18,7 +18,6 @@ const props = defineProps({
       type: Boolean,
       default: true,
    },
-   as: String,
 })
 </script>
 
@@ -35,13 +34,12 @@ const props = defineProps({
             :name="props.name"
          />
       </div>
-      <component
-         :is="props.as || Field"
+      <Field
          as="select"
          class="select select-bordered w-full border-base-300 select-sm shadow rounded min-w-24"
          v-bind="$attrs"
          :name="props.name"
-         :value="props.selected || 'empty'"
+         :value="props.selected"
       >
          <option
             v-for="(option, index) in props.options"
@@ -51,7 +49,6 @@ const props = defineProps({
          >
             {{ option }}
          </option>
-         <option v-if="!props.options" disabled selected value="empty">Empty</option>
-      </component>
+      </Field>
    </label>
 </template>

@@ -65,8 +65,8 @@ const props = defineProps({
          <FormSelect
             name="roleid"
             label="Role"
-            :options="props.optionsRole"
             v-if="!props.hideRole"
+            :options="props.optionsRole"
             :disabled="props.disabled"
          />
       </div>

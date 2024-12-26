@@ -1,5 +1,5 @@
 <script setup>
-import { FormInput, FormCheckboxCard, FormSelect } from '@/components/Form'
+import { FormInput, FormCheckboxCard } from '@/components/Form'
 import { Icon } from '@iconify/vue'
 import { ref, computed } from 'vue'
 
@@ -64,13 +64,19 @@ const filteredEmployeeList = () => {
       <div class="flex flex-row gap-4 justify-between w-full flex-wrap">
          <div class="inline-flex text-sm text-nowrap items-center gap-x-4 font-normal">
             <span>Rows per page</span>
-            <FormSelect
-               :options="selectOptions"
-               :selected="selected"
-               :hide-label="true"
-               as="select"
+            <select
                @change="updateRowsPerPageSelect"
-            />
+               class="select select-bordered w-full border-base-300 select-sm shadow rounded min-w-24"
+            >
+               <option
+                  v-for="(option, index) in selectOptions"
+                  :key="index"
+                  :value="option"
+                  :selected="option == selected.value"
+               >
+                  {{ option }}
+               </option>
+            </select>
          </div>
          <button class="btn btn-sm btn-outline border-base-300 shadow" @click="onReset">
             <Icon icon="mdi:filter-minus-outline" width="18" height="18" />
