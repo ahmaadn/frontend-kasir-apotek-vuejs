@@ -37,3 +37,10 @@ export async function updateUser(userid, data, config = {}) {
       ...config,
    })
 }
+
+export async function deleteUser(userid, config = {}) {
+   return await request(`/user/delete/${userid}`, {
+      method: 'DELETE',
+      ...config,
+   })
+}

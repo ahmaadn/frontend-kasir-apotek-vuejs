@@ -2,6 +2,7 @@
 import 'vue3-easy-data-table/dist/style.css'
 import '@/assets/css/table.css'
 
+import UserDeleteDialog from '@/components/User/UserDeleteDialog.vue'
 import { TableFilter, TablePagination } from '@/components/Table'
 import { useUserStore } from '@/stores/user'
 import { onMounted, ref } from 'vue'
@@ -9,7 +10,6 @@ import { getUserList } from '@/lib/api/user'
 import { toast } from 'vue-sonner'
 
 const userStore = useUserStore()
-const selected = ref(null)
 const loading = ref(true)
 const dataTable = ref()
 const employeeList = ref([])
@@ -31,10 +31,6 @@ const options = {
          })
       },
    },
-}
-
-const onSelected = (item) => {
-   selected.value = item
 }
 
 const headers = [
@@ -83,7 +79,6 @@ onMounted(loadEmployeeList)
             hide-footer
             buttons-pagination
             show-index
-            @click-row="onSelected"
          >
             <template #loading>
                <span class="loading loading-infinity loading-lg"></span>
@@ -112,9 +107,12 @@ onMounted(loadEmployeeList)
             </template>
             <template #item-action="{ userid }">
                <div class="flex flex-row gap-2">
-                  <button class="btn btn-xs btn-error" v-if="userid != userStore.getUserId">
-                     delete
-                  </button>
+                  <UserDeleteDialog
+                     :userid="userid"
+                     v-if="userid != userStore.getUserId"
+                     @on-success="loadEmployeeList"
+                  />
+
                   <router-link
                      :to="{ name: 'UpdateEmployee', params: { id: userid } }"
                      class="btn btn-xs btn-warning"
