@@ -55,6 +55,7 @@ const onSumbit = form.handleSubmit(async (values) => {
       await new Promise((resolve) => setTimeout(resolve, 600))
       router.push({ name: 'Login' })
    }
+   router.push({ name: 'Employee' })
 })
 
 const getUserDetail = async () => {
