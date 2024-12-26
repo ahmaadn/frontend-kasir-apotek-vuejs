@@ -1,8 +1,8 @@
 [
   {
-    "label": "Home",
+    "label": "Dashboard",
     "icon": "mdi:view-dashboard-outline",
-    "url": "/",
+    "url": "/dashboard",
     "roles": ["ADM", "CSR", "WRH"]
   },
   {
@@ -38,7 +38,7 @@
   {
     "label": "Kelola Pegawai",
     "icon": "mdi:people-group-outline",
-    "url": "/employee",
+    "url": "/employee/",
     "roles": ["ADM"],
     "submenu": [
       {
@@ -49,7 +49,7 @@
       {
         "label": "Tambah Pegawai",
         "icon": "mdi:people-add-outline",
-        "url": "/add"
+        "url": "add"
       }
     ]
   },
