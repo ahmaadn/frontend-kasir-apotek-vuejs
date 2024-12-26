@@ -1,5 +1,4 @@
 <script setup>
-import BreadcrumbsNav from '@/components/BreadcrumbsNav.vue'
 import UserForm from '@/components/User/UserForm.vue'
 import { onMounted, ref } from 'vue'
 import { detailUser, updateUser } from '@/lib/api/user'
@@ -80,19 +79,25 @@ onMounted(getUserDetail)
 </script>
 
 <template>
-   <main class="bg-base-100 p-4 shadow border rounded">
-      <h1 class="text-lg font-medium">Update Pegawai</h1>
-      <BreadcrumbsNav />
-      <UserForm
-         @submit="onSumbit"
-         :options-role="options"
-         :hide-role="userid == userStore.getUserId"
-         :disabled="disabled"
-         hide-password
-      >
-         <button class="btn btn-sm w-full btn-success shadow mt-3 text-white" :disabled="disabled">
-            Update
-         </button>
-      </UserForm>
+   <main class="bg-base-100 shadow border rounded divide-y">
+      <div class="py-4 px-6">
+         <h1 class="md:text-2xl text-lg font-medium">Update Pegawai</h1>
+      </div>
+      <div class="p-6">
+         <UserForm
+            @submit="onSumbit"
+            :options-role="options"
+            :hide-role="userid == userStore.getUserId"
+            :disabled="disabled"
+            hide-password
+         >
+            <button
+               class="btn btn-sm w-full btn-success shadow mt-3 text-white"
+               :disabled="disabled"
+            >
+               Update
+            </button>
+         </UserForm>
+      </div>
    </main>
 </template>

@@ -1,5 +1,4 @@
 <script setup>
-import BreadcrumbsNav from '@/components/BreadcrumbsNav.vue'
 import UserForm from '@/components/User/UserForm.vue'
 import { ref } from 'vue'
 import { createUser } from '@/lib/api/user'
