@@ -58,6 +58,7 @@ const onSumbit = form.handleSubmit(async (values) => {
 })
 
 const getUserDetail = async () => {
+   disabled.value = true
    await detailUser(userid.value)
       .then((res) => {
          const data = res.data
@@ -68,6 +69,7 @@ const getUserDetail = async () => {
             userphone: userData.value.userphone,
             roleid: userData.value.role.rolename,
          })
+         disabled.value = false
       })
       .catch(() => {
          toast.error('Failed get detail user')
@@ -92,7 +94,7 @@ onMounted(getUserDetail)
             hide-password
          >
             <button
-               class="btn btn-sm w-full btn-success shadow mt-3 text-white"
+               class="btn btn-sm w-full btn-success shadow text-white mt-6"
                :disabled="disabled"
             >
                Update

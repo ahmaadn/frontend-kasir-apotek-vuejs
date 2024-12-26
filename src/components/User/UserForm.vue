@@ -23,6 +23,7 @@ const props = defineProps({
       default: false,
    },
    optionsRole: Array,
+   disabled: Boolean,
 })
 </script>
 
@@ -35,6 +36,7 @@ const props = defineProps({
             type="text"
             placeholder="Masukkan Nama"
             v-if="!props.hideEmail"
+            :disabled="props.disabled"
          />
          <FormInput
             name="email"
@@ -42,6 +44,7 @@ const props = defineProps({
             type="email"
             placeholder="Masukkan Email"
             v-if="!props.hideEmail"
+            :disabled="props.disabled"
          />
          <FormInput
             name="password"
@@ -49,6 +52,7 @@ const props = defineProps({
             type="password"
             placeholder="Masukkan password"
             v-if="!props.hidePassword"
+            :disabled="props.disabled"
          />
          <FormInput
             name="userphone"
@@ -56,12 +60,14 @@ const props = defineProps({
             type="Userphone"
             placeholder="Masukkan Userphone"
             v-if="!props.hideUserphone"
+            :disabled="props.disabled"
          />
          <FormSelect
             name="roleid"
             label="Role"
             :options="props.optionsRole"
             v-if="!props.hideRole"
+            :disabled="props.disabled"
          />
       </div>
       <slot></slot>
