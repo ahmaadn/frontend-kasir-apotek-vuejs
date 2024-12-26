@@ -83,7 +83,6 @@ onMounted(getUserDetail)
    <main class="bg-base-100 p-4 shadow border rounded">
       <h1 class="text-lg font-medium">Update Pegawai</h1>
       <BreadcrumbsNav />
-      {{ userid == userStore.getUserId }}
       <UserForm
          @submit="onSumbit"
          :options-role="options"
