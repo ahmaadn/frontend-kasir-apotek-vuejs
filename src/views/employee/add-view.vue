@@ -49,7 +49,7 @@ const onSumbit = form.handleSubmit(async (values) => {
       <div class="p-6">
          <UserForm @submit="onSumbit" :options-role="options">
             <button
-               class="btn btn-sm w-full btn-success shadow mt-3 text-white"
+               class="btn btn-sm w-full btn-success shadow mt-6 text-white"
                :disabled="disabled"
             >
                Tambah
