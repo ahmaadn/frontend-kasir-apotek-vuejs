@@ -15,7 +15,8 @@ const dataTable = ref()
 const employeeList = ref([])
 
 const options = {
-   checkbok: {
+   checkbox: {
+      label: 'Filter Role',
       options: ['Admin', 'Pengelola Gudang', 'Kasir'],
       filtered: function (items, checked) {
          return items.filter((item) => {

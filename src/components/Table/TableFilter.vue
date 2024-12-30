@@ -1,7 +1,8 @@
 <script setup>
 import { FormInput, FormCheckboxCard } from '@/components/Form'
+import TablePerRows from './TablePerRows.vue'
 import { Icon } from '@iconify/vue'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
    options: {
@@ -14,14 +15,7 @@ const items = defineModel('items', { required: true })
 const dataTable = defineModel('dataTable', { required: true })
 
 const search = ref(props.options?.search.default || '')
-const checked = ref(props.options?.checkbok.default || [])
-
-const selectOptions = computed(() => dataTable.value?.rowsPerPageOptions)
-const selected = computed(() => dataTable.value?.rowsPerPageActiveOption)
-
-const updateRowsPerPageSelect = (e) => {
-   dataTable.value.updateRowsPerPageActiveOption(Number(e.target.value))
-}
+const checked = ref(props.options?.checkbox.default || [])
 
 const onReset = () => {
    dataTable.value.updateRowsPerPageActiveOption(dataTable.value?.rowsPerPageOptions[0])
@@ -32,12 +26,12 @@ const onReset = () => {
 const filteredEmployeeList = () => {
    let filtered = items.value
 
-   if (search.value) {
+   if (search.value && !props.options.search.hide) {
       filtered = props.options.search.filtered(filtered, search.value)
    }
 
-   if (checked.value.length > 0) {
-      filtered = props.options.checkbok.filtered(filtered, checked.value)
+   if (checked.value.length > 0 && !props.options.checkbox.hide) {
+      filtered = props.options.checkbox.filtered(filtered, checked.value)
    }
    return filtered
 }
@@ -45,8 +39,12 @@ const filteredEmployeeList = () => {
 
 <template>
    <main class="flex flex-col gap-4">
-      <div class="flex flex-row gap-4 justify-between w-full flex-wrap">
+      <div
+         v-if="!options.search.hide || !options.checkbox.hide"
+         class="flex flex-row gap-4 justify-between w-full flex-wrap"
+      >
          <FormInput
+            v-if="!options.search.hide"
             name="search"
             class="w-full md:max-w-sm"
             placeholder="Cari nama Pegawai"
@@ -55,29 +53,15 @@ const filteredEmployeeList = () => {
             :show-error="false"
          />
          <FormCheckboxCard
-            label="Filter Role"
+            v-if="!options.checkbox.hide"
             class="dropdown-end"
+            :label="options.checkbox.label"
             :items="['Admin', 'Pengelola Gudang', 'Kasir']"
             v-model="checked"
          />
       </div>
       <div class="flex flex-row gap-4 justify-between w-full flex-wrap">
-         <div class="inline-flex text-sm text-nowrap items-center gap-x-4 font-normal">
-            <span>Rows per page</span>
-            <select
-               @change="updateRowsPerPageSelect"
-               class="select select-bordered w-full border-base-300 select-sm shadow rounded min-w-24"
-            >
-               <option
-                  v-for="(option, index) in selectOptions"
-                  :key="index"
-                  :value="option"
-                  :selected="option == selected.value"
-               >
-                  {{ option }}
-               </option>
-            </select>
-         </div>
+         <TablePerRows v-model:data-table="dataTable" />
          <button class="btn btn-sm btn-outline border-base-300 shadow" @click="onReset">
             <Icon icon="mdi:filter-minus-outline" width="18" height="18" />
             Reset
