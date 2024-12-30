@@ -9,11 +9,6 @@ import { onMounted, ref } from 'vue'
 import { getUserList } from '@/lib/api/user'
 import { toast } from 'vue-sonner'
 
-const userStore = useUserStore()
-const loading = ref(true)
-const dataTable = ref()
-const employeeList = ref([])
-
 const options = {
    checkbox: {
       label: 'Filter Role',
@@ -41,6 +36,11 @@ const headers = [
    { text: 'Role', value: 'role.rolename', sortable: true, width: 200 },
    { text: 'Aksi', value: 'action' },
 ]
+
+const userStore = useUserStore()
+const loading = ref(true)
+const dataTable = ref()
+const employeeList = ref([])
 
 const loadEmployeeList = async () => {
    loading.value = true
@@ -79,7 +79,6 @@ onMounted(loadEmployeeList)
                :items="items"
                :loading="loading"
                hide-footer
-               buttons-pagination
                show-index
             >
                <template #loading>

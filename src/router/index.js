@@ -72,6 +72,21 @@ const routers = [
          },
       ],
    },
+   {
+      path: '/medicine/',
+      component: DefaultLayout,
+      children: [
+         {
+            path: 'categories',
+            name: 'MedicineCategory',
+            component: () => import('@/views/category/index-view.vue'),
+            meta: {
+               roles: ['WRH'],
+               title: 'Daftar Kategori Obat',
+            },
+         },
+      ],
+   },
 ]
 
 const router = createRouter({

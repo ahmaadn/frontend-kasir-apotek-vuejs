@@ -32,6 +32,11 @@
         "label": "Tambah Obat",
         "icon": "mdi:box-variant-add",
         "url": "/add"
+      },
+      {
+        "label": "Kategori Obat",
+        "icon": "mdi:box-variant-add",
+        "url": "/categories"
       }
     ]
   },
