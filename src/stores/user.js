@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode'
 import { defineStore } from 'pinia'
-import { loginWithJWT } from '@/lib/api/user'
+import { detailUser, loginWithJWT } from '@/lib/api/user'
 import { getToken, removeToken, setToken } from '@/lib/auth'
 import { useAppStore } from './app'
 
@@ -49,6 +49,26 @@ export const useUserStore = defineStore('userStore', {
          this.userId = ''
          this.role = ''
          this.fullname = ''
+      },
+      getInfo() {
+         return new Promise((resolve, reject) => {
+            detailUser(this.userId)
+               .then((res) => {
+                  const { data } = res.data
+                  if (!data) {
+                     reject('Verification failed, please Login again.')
+                  }
+                  const { userid, fullname, role } = data
+
+                  this.userId = userid
+                  this.fullname = fullname
+                  this.role = role.roleid
+                  resolve(data)
+               })
+               .catch((error) => {
+                  reject(error)
+               })
+         })
       },
    },
    persist: true,

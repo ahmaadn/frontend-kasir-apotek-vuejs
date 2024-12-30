@@ -7,11 +7,13 @@ import { useAppStore } from '@/stores/app'
 
 const whiteList = ['/404']
 
-function handlePermission(to, next) {
+async function handlePermission(to, next) {
    const userStore = useUserStore()
    const appStore = useAppStore()
 
-   if (to.meta.roles && to.meta.roles.includes(userStore.getRole)) {
+   const { role } = await userStore.getInfo()
+
+   if (to.meta.roles && to.meta.roles.includes(role.roleid)) {
       appStore.generateSidebarMenu()
       next()
    } else {
@@ -19,14 +21,14 @@ function handlePermission(to, next) {
    }
 }
 
-function handleAuthenticatedUser(to, next) {
+async function handleAuthenticatedUser(to, next) {
    if (whiteList.includes(to.path)) {
       next()
    } else if (to.name === 'Login') {
       next({ name: 'Home' })
    } else {
       try {
-         handlePermission(to, next)
+         await handlePermission(to, next)
       } catch (e) {
          const userStore = useUserStore()
          userStore.logout()
@@ -51,7 +53,7 @@ router.beforeEach(async (to, from, next) => {
    const hasToken = getToken()
 
    if (hasToken) {
-      handleAuthenticatedUser(to, next)
+      await handleAuthenticatedUser(to, next)
    } else {
       handleUnauthenticatedUser(to, next)
    }
