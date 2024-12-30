@@ -35,27 +35,30 @@ const form = useForm({
 })
 
 const onSumbit = form.handleSubmit(async (values) => {
-   values.roleid = Object.keys(roles).find((key) => roles[key] === values.roleid)
    disabled.value = true
-   if (userid.value == userStore.getUserId && values.roleid != userData.value.role.roleid) {
+   values.roleid = Object.keys(roles).find((key) => roles[key] === values.roleid)
+
+   if (userid.value == userStore.getUserId && values.roleid != userStore.getRole) {
       toast.error('Tidak Bisa mengubah role admin yang sedang dipakai')
       disabled.value = false
       return
    }
 
-   await updateUser(userid.value, values).then((res) => {
-      const data = res.data
-      toast.success(data.message)
-   })
-   disabled.value = false
-
-   if (userid.value == userStore.getUserId && values.email != userData.value.email) {
-      userStore.logout()
-      toast.success('You Automatic Logout')
-      await new Promise((resolve) => setTimeout(resolve, 600))
-      router.push({ name: 'Login' })
-   }
-   router.push({ name: 'Employee' })
+   await updateUser(userid.value, values)
+      .then(async (res) => {
+         if (userid.value == userStore.getUserId && values.email != userData.value.email) {
+            userStore.logout()
+            toast.success('You Automatic Logout')
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+            router.push({ name: 'Login' })
+         } else {
+            toast.success(res.data.message)
+            router.push({ name: 'Employee' })
+         }
+      })
+      .catch(() => {
+         disabled.value = false
+      })
 })
 
 const getUserDetail = async () => {
