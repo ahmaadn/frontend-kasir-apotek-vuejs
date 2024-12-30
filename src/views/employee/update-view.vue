@@ -1,5 +1,6 @@
 <script setup>
 import UserForm from '@/components/User/UserForm.vue'
+import UserChangePassword from '@/components/User/UserChangePassword.vue'
 import { onMounted, ref } from 'vue'
 import { detailUser, updateUser } from '@/lib/api/user'
 import { toast } from 'vue-sonner'
@@ -85,25 +86,37 @@ onMounted(getUserDetail)
 </script>
 
 <template>
-   <main class="bg-base-100 shadow border rounded divide-y">
-      <div class="py-4 px-6">
-         <h1 class="md:text-2xl text-lg font-medium">Update Pegawai</h1>
-      </div>
-      <div class="p-6">
-         <UserForm
-            @submit="onSumbit"
-            :options-role="options"
-            :hide-role="userid == userStore.getUserId"
-            :disabled="disabled"
-            hide-password
-         >
-            <button
-               class="btn btn-sm w-full btn-success shadow text-white mt-6"
-               :disabled="disabled"
-            >
-               Update
-            </button>
-         </UserForm>
+   <main class="rounded">
+      <div class="md:grid grid-cols-[1fr_40%] gap-6 flex flex-col">
+         <div class="bg-base-100 shadow border rounded">
+            <div class="py-4 px-6 border-b">
+               <h1 class="md:text-2xl text-lg font-medium">Update Pegawai</h1>
+            </div>
+            <div class="p-6">
+               <UserForm
+                  @submit="onSumbit"
+                  :options-role="options"
+                  :hide-role="userid == userStore.getUserId"
+                  :disabled="disabled"
+                  hide-password
+               >
+                  <button
+                     class="btn btn-sm w-full btn-warning shadow text-white mt-6"
+                     :disabled="disabled"
+                  >
+                     Update
+                  </button>
+               </UserForm>
+            </div>
+         </div>
+         <div class="bg-base-100 shadow border h-fit rounded">
+            <div class="py-4 px-6 border-b">
+               <h1 class="md:text-2xl text-lg font-medium">Update Password</h1>
+            </div>
+            <div class="p-6">
+               <UserChangePassword :userid="userid" />
+            </div>
+         </div>
       </div>
    </main>
 </template>
