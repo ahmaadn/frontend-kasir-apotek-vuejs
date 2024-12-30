@@ -1,6 +1,5 @@
 <script setup>
-import UserForm from '@/components/User/UserForm.vue'
-import UserChangePassword from '@/components/User/UserChangePassword.vue'
+import { UserForm, UserChangePassword } from '@/components/User'
 import { onMounted, ref } from 'vue'
 import { detailUser, updateUser } from '@/lib/api/user'
 import { toast } from 'vue-sonner'

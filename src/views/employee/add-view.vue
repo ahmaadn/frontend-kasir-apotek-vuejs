@@ -1,5 +1,5 @@
 <script setup>
-import UserForm from '@/components/User/UserForm.vue'
+import { UserForm } from '@/components/User'
 import { ref } from 'vue'
 import { createUser } from '@/lib/api/user'
 import { toast } from 'vue-sonner'

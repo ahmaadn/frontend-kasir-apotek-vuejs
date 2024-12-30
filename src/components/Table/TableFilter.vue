@@ -1,6 +1,6 @@
 <script setup>
 import { FormInput, FormCheckboxCard } from '@/components/Form'
-import TablePerRows from './TablePerRows.vue'
+import TableOptionRows from './TableOptionRows.vue'
 import { Icon } from '@iconify/vue'
 import { ref } from 'vue'
 
@@ -61,7 +61,7 @@ const filteredEmployeeList = () => {
          />
       </div>
       <div class="flex flex-row gap-4 justify-between w-full flex-wrap">
-         <TablePerRows v-model:data-table="dataTable" />
+         <TableOptionRows v-model:data-table="dataTable" />
          <button class="btn btn-sm btn-outline border-base-300 shadow" @click="onReset">
             <Icon icon="mdi:filter-minus-outline" width="18" height="18" />
             Reset

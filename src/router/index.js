@@ -45,7 +45,7 @@ const routers = [
          {
             path: '',
             name: 'Employee',
-            component: () => import('@/views/employee/employee-view.vue'),
+            component: () => import('@/views/employee/index-view.vue'),
             meta: {
                roles: ['ADM'],
                title: 'Daftar Pegawai',
@@ -81,7 +81,7 @@ const routers = [
             name: 'MedicineCategory',
             component: () => import('@/views/category/index-view.vue'),
             meta: {
-               roles: ['WRH'],
+               roles: ['ADM', 'WRH'],
                title: 'Daftar Kategori Obat',
             },
          },

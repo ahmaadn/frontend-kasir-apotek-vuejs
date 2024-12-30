@@ -4,10 +4,10 @@ import '@/assets/css/table.css'
 
 import { TableFilter, TablePagination } from '@/components/Table'
 import { FormInput, FormTextarea } from '@/components/Form'
+import { DialogForm } from '@/components/Dialog'
 import { cretaeCategoryMedicine, getCategoryMedicine } from '@/lib/api/category'
 import { onMounted, ref } from 'vue'
 import { toast } from 'vue-sonner'
-import DialogForm from '@/components/DialogForm.vue'
 import * as z from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
 

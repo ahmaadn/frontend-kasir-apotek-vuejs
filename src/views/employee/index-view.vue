@@ -2,7 +2,7 @@
 import 'vue3-easy-data-table/dist/style.css'
 import '@/assets/css/table.css'
 
-import UserDeleteDialog from '@/components/User/UserDeleteDialog.vue'
+import { UserDeleteDialog } from '@/components/User'
 import { TableFilter, TablePagination } from '@/components/Table'
 import { useUserStore } from '@/stores/user'
 import { onMounted, ref } from 'vue'
