@@ -6,3 +6,11 @@ export async function getCategoryMedicine(config = {}) {
       ...config,
    })
 }
+
+export async function cretaeCategoryMedicine(data, config = {}) {
+   return await request('/medicine/category/add', {
+      method: 'POST',
+      data,
+      ...config,
+   })
+}
