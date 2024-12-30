@@ -8,9 +8,6 @@ const firstPageIndex = computed(() => dataTable.value?.currentPageFirstIndex)
 const lastPageIndex = computed(() => dataTable.value?.currentPageLastIndex)
 const itemsLength = computed(() => dataTable.value?.clientItemsLength)
 
-const maxPageNumber = computed(() => dataTable.value?.maxPaginationNumber)
-const currentPage = computed(() => dataTable.value?.currentPaginationNumber)
-
 const isFirstPage = computed(() => dataTable.value?.isFirstPage)
 const isLastPage = computed(() => dataTable.value?.isLastPage)
 
@@ -19,9 +16,6 @@ const nextPage = () => {
 }
 const prevPage = () => {
    dataTable.value.prevPage()
-}
-const updatePage = (value) => {
-   dataTable.value.updatePage(value)
 }
 </script>
 
@@ -40,42 +34,6 @@ const updatePage = (value) => {
                <span class="sr-only">Prev Page</span>
                <Icon icon="mdi:navigate-before" width="24" height="24" />
             </button>
-         </li>
-
-         <li v-if="currentPage != firstPageIndex && maxPageNumber > 3">
-            <button
-               class="btn btn-sm btn-outline shadow btn-square border-base-300"
-               :class="{
-                  'btn-primary': currentPage == firstPageIndex,
-                  'btn-outline': currentPage != firstPageIndex,
-               }"
-               @click="updatePage(1)"
-            >
-               {{ firstPageIndex }}
-            </button>
-         </li>
-         <li v-for="page in maxPageNumber" v-bind:key="page">
-            <button
-               class="btn btn-sm shadow btn-square border-base-300"
-               :class="{
-                  'btn-primary': currentPage == page,
-                  'btn-outline': currentPage != page,
-               }"
-               @click="updatePage(page)"
-            >
-               {{ page }}
-            </button>
-         </li>
-         <li v-if="currentPage != lastPageIndex && maxPageNumber - 3 > 3">
-            <a
-               href="#"
-               class="btn btn-sm btn-outline shadow btn-square border-base-300"
-               :class="{
-                  'btn-primary': currentPage == lastPageIndex,
-                  'btn-outline': currentPage != lastPageIndex,
-               }"
-               >{{ lastPageIndex }}</a
-            >
          </li>
          <li>
             <button
