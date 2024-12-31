@@ -1,5 +1,5 @@
 <script setup>
-import { DialogConfirmation } from '@/components/dialog'
+import { DialogConfirmation } from '@/components/Dialog'
 import { deleteUser } from '@/lib/api/user'
 import { toast } from 'vue-sonner'
 import { ref } from 'vue'
