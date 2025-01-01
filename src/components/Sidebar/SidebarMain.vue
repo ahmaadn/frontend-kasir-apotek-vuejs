@@ -24,8 +24,8 @@ const appStore = useAppStore()
       }"
       :aria-expanded="!appStore.isSidebarCollapes"
    >
-      <div class="relative z-[1] h-full border-r bg-base-100">
-         <SidebarHeader />
+      <div class="relative z-[1] h-full border-r bg-neutral text-neutral-content">
+         <SidebarHeader class="hover:text-base-100" />
          <div class="h-full overflow-auto p-2">
             <ul class="menu space-y-4">
                <li
@@ -44,6 +44,7 @@ const appStore = useAppStore()
                      :to="link.url"
                      :label="link.label"
                      :icon="link.icon"
+                     class="hover:text-white focus:text-white active:text-white"
                   />
                </li>
             </ul>

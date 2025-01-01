@@ -13,14 +13,18 @@ const props = defineProps({
 <template>
    <details
       open
-      class="sidebar-menu w-full rounded hover:bg-base-200 active:bg-neutral active:text-neutral-content"
+      class="sidebar-menu w-full rounded hover:bg-base-300 hover:text-base-content/60 group"
    >
-      <summary class="px-2 after:mr-2 sidebar-tooltip">
+      <summary
+         class="px-2 after:mr-2 sidebar-tooltip group-hover:active:bg-base-300 group-hover:active:text-base-content group-hover:text-base-content"
+      >
          <Icon :icon="props.icon" class="h-6 w-6"></Icon>
          <span class="sidebar-menu_title whitespace-nowrap">{{ props.label }}</span>
          <SidebarTooltip class="left-14" :label="props.label" />
       </summary>
-      <ul class="md:transition-all md:duration-300">
+      <ul
+         class="md:transition-transform md:duration-300 before:border-base-100 before:border-[1px] group-hover:before:border-neutral"
+      >
          <li
             v-for="(menu, index) in props.submenu"
             :key="index"
@@ -32,7 +36,13 @@ const props = defineProps({
                :label="menu.label"
                :submenu="menu.submenu"
             />
-            <SidebarItem v-else :to="menu.url" :label="menu.label" :icon="menu.icon" />
+            <SidebarItem
+               v-else
+               :to="menu.url"
+               :label="menu.label"
+               :icon="menu.icon"
+               class="hover:bg-base-300 hover:text-base-content focus:text-base-content focus:bg-base-300 active:text-white"
+            />
          </li>
       </ul>
    </details>
