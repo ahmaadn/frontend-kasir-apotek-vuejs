@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-   <div class="fixed tooltip tooltip-right" :data-tip="label"></div>
+   <div class="fixed tooltip tooltip-right z-10" :data-tip="label"></div>
 </template>
 
 <style scoped>

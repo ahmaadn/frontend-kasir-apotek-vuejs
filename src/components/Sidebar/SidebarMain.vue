@@ -16,7 +16,7 @@ const appStore = useAppStore()
 
 <template>
    <aside
-      class="sidebar max-md:w-72"
+      class="sidebar max-md:w-72 z-10"
       :class="{
          'w-[72px]': appStore.isSidebarCollapes,
          'w-72 active': !appStore.isSidebarCollapes,
