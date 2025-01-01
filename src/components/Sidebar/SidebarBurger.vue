@@ -1,11 +1,15 @@
 <script setup>
 import { Icon } from '@iconify/vue'
+import { useAppStore } from '@/stores/app'
 
-const model = defineModel({ default: false })
+const appStore = useAppStore()
 </script>
 
 <template>
-   <button class="btn btn-square btn-ghost">
-      <Icon :icon="model ? 'mdi:menu-close' : 'mdi:menu-open'" class="w-5 h-5" />
+   <button class="btn btn-square btn-ghost" @click="appStore.sidebarToogle()">
+      <Icon
+         :icon="appStore.isSidebarCollapes ? 'mdi:menu-close' : 'mdi:menu-open'"
+         class="w-5 h-5"
+      />
    </button>
 </template>

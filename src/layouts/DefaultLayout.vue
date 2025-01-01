@@ -19,7 +19,7 @@ const logout = async () => {
    <main>
       <SidebarMain />
       <div
-         class="transition-all duration-300"
+         class="duration-300"
          :class="{
             'md:pl-[72px]': appStore.isSidebarCollapes,
             'md:pl-72': !appStore.isSidebarCollapes,
@@ -29,11 +29,7 @@ const logout = async () => {
             <div class="px-2">
                <div class="navbar min-h-[56px] gap-x-4">
                   <div class="navbar-start gap-2">
-                     <SidebarBurger
-                        class="h-9 min-h-9 w-9 min-w-9 md:hidden"
-                        @click="appStore.sidebarToogle()"
-                        v-model="appStore.isSidebarCollapes"
-                     />
+                     <SidebarBurger class="h-9 min-h-9 w-9 min-w-9" />
                      <router-link
                         :to="route"
                         class="md:text-xl font-semibold text-lg text-nowrap"

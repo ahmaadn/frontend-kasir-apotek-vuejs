@@ -1,62 +1,58 @@
 <script setup>
-import SidebarBurger from './SidebarBurger.vue'
-import SidebarLink from './SidebarLink.vue'
-import SidebarSubmenu from './SidebarSubmenu.vue'
+import SidebarItem from './SidebarItem.vue'
+import SidebarMenu from './SidebarMenu.vue'
+import SidebarHeader from './SidebarHeader.vue'
 import { useAppStore } from '@/stores/app'
-import { Icon } from '@iconify/vue'
+
+defineProps({
+   hoverable: {
+      type: Boolean,
+      default: false,
+   },
+})
 
 const appStore = useAppStore()
 </script>
 
 <template>
    <aside
-      class="sidebar z-20 max-md:w-72"
+      class="sidebar max-md:w-72 z-10"
       :class="{
          'w-[72px]': appStore.isSidebarCollapes,
          'w-72 active': !appStore.isSidebarCollapes,
+         hoverable: hoverable,
       }"
       :aria-expanded="!appStore.isSidebarCollapes"
    >
-      <div class="relative z-20 h-full border-r bg-base-100 p-2">
-         <div class="mb-2 flex h-14 min-h-14 w-full flex-nowrap items-center justify-center">
-            <router-link
-               to="/"
-               class="sidebar-title flex flex-1 items-center overflow-hidden p-2 text-2xl font-bold leading-4"
-            >
-               <Icon icon="mdi:cart" size="2rem" class="w-8 overflow-hidden rounded-sm" />
-               <h1 class="pl-2 text-2xl font-bold">Kasir</h1>
-            </router-link>
-            <SidebarBurger
-               class="relative h-10 min-h-10 w-10 min-w-10 flex-none"
-               @click="appStore.sidebarToogle()"
-               v-model="appStore.isSidebarCollapes"
-            />
-         </div>
-         <div class="h-full">
-            <ul class="sidebar-menu menu">
+      <div class="relative z-[1] h-full border-r bg-neutral text-neutral-content">
+         <SidebarHeader class="hover:text-base-100" />
+         <div class="h-full overflow-auto p-2">
+            <ul class="menu space-y-4">
                <li
                   v-for="(link, index) in appStore.getSidebarMenu"
                   v-bind:key="index"
                   class="min-h-10 items-start text-base font-medium"
                >
-                  <SidebarSubmenu
+                  <SidebarMenu
                      v-if="link.submenu && link.submenu.length != 0"
                      :icon="link.icon"
                      :label="link.label"
                      :submenu="link.submenu"
                   />
-                  <SidebarLink
+                  <SidebarItem
                      v-if="link.url && !link.submenu"
                      :to="link.url"
                      :label="link.label"
                      :icon="link.icon"
+                     class="hover:text-white focus:text-white active:text-white"
                   />
                </li>
             </ul>
          </div>
       </div>
       <label
-         class="fixed inset-0 z-10 h-screen min-h-screen w-screen md:hidden"
+         v-if="!appStore.isSidebarCollapes"
+         class="fixed inset-0 h-screen min-h-screen w-screen md:hidden"
          @click="appStore.closeSidebarMobile()"
       ></label>
    </aside>
@@ -77,16 +73,8 @@ const appStore = useAppStore()
 }
 
 @media screen and (min-width: 768px) {
-   .sidebar:not(.active):hover {
+   .sidebar.hoverable:not(.active):hover {
       @apply w-72;
-   }
-
-   .sidebar:not(.active) .sidebar-title {
-      @apply invisible absolute w-0 opacity-0;
-   }
-
-   .sidebar:not(.active):hover .sidebar-title {
-      @apply visible relative w-full opacity-100;
    }
 }
 </style>

@@ -1,4 +1,5 @@
 <script setup>
+import SidebarTooltip from './SidebarTooltip.vue'
 import { Icon } from '@iconify/vue'
 import { useRoute } from 'vue-router'
 
@@ -14,25 +15,27 @@ const route = useRoute()
 <template>
    <router-link
       :to="props.to"
-      class="w-full text-nowrap px-2 group"
+      class="w-full text-nowrap px-2 group sidebar-item sidebar-tooltip"
       :class="{
-         'relative before:bg-primary before:absolute before:left-0 before:h-full before:w-1 before:rounded':
+         'relative before:bg-primary before:absolute before:left-0 before:inset-y-0 before:my-0.5 before:w-1 before:rounded-md':
             route.fullPath == props.to,
       }"
    >
+      <SidebarTooltip class="left-14" :label="props.label" />
       <Icon :icon="props.icon" class="h-6 w-6" />
       <span class="sidebar-link whitespace-nowrap">
          {{ props.label }}
       </span>
    </router-link>
 </template>
+
 <style scoped>
 @media screen and (min-width: 768px) {
-   .sidebar:not(.active) .sidebar-link {
-      @apply invisible absolute left-0 w-0 opacity-0;
+   .sidebar:not(.active) .sidebar-item span {
+      @apply hidden;
    }
-   .sidebar:not(.active):hover .sidebar-link {
-      @apply visible relative w-full opacity-100;
+   .sidebar.hoverable:not(.active):hover .sidebar-item span {
+      @apply block;
    }
 }
 </style>
