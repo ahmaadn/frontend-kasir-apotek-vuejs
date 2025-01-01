@@ -1,6 +1,7 @@
 <script setup>
 import { Icon } from '@iconify/vue'
 import SidebarItem from './SidebarItem.vue'
+import SidebarTooltip from './SidebarTooltip.vue'
 
 const props = defineProps({
    label: String,
@@ -14,9 +15,10 @@ const props = defineProps({
       open
       class="sidebar-menu w-full rounded hover:bg-base-200 active:bg-neutral active:text-neutral-content"
    >
-      <summary class="px-2 after:mr-2">
+      <summary class="px-2 after:mr-2 sidebar-tooltip">
          <Icon :icon="props.icon" class="h-6 w-6"></Icon>
          <span class="sidebar-menu_title whitespace-nowrap">{{ props.label }}</span>
+         <SidebarTooltip class="left-14" :label="props.label" />
       </summary>
       <ul class="md:transition-all md:duration-300">
          <li
