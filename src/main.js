@@ -10,6 +10,7 @@ import router from './router'
 import './middleware'
 
 import Vue3EasyDataTable from 'vue3-easy-data-table'
+import vSelect from 'vue-select'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -22,3 +23,4 @@ app.use(router)
 app.mount('#app')
 
 app.component('EasyDataTable', Vue3EasyDataTable)
+app.component('v-select', vSelect)

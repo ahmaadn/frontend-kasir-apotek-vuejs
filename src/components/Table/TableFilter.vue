@@ -2,7 +2,7 @@
 import { FormInput, FormCheckboxCard } from '@/components/Form'
 import TableOptionRows from './TableOptionRows.vue'
 import { Icon } from '@iconify/vue'
-import { ref } from 'vue'
+import { onMounted } from 'vue'
 
 const props = defineProps({
    options: {
@@ -13,14 +13,15 @@ const props = defineProps({
 
 const items = defineModel('items', { required: true })
 const dataTable = defineModel('dataTable', { required: true })
-
-const search = ref(props.options?.search.default || '')
-const checked = ref(props.options?.checkbox.default || [])
+const search = defineModel('search', { default: '' })
+const checked = defineModel('checked', { default: [] })
+const emit = defineEmits(['reset'])
 
 const onReset = () => {
    dataTable.value.updateRowsPerPageActiveOption(dataTable.value?.rowsPerPageOptions[0])
-   search.value = ''
-   checked.value = []
+   search.value = props.options?.search.reset || ''
+   checked.value = props.options?.search.reset || []
+   emit('reset')
 }
 
 const filteredEmployeeList = () => {
@@ -35,6 +36,15 @@ const filteredEmployeeList = () => {
    }
    return filtered
 }
+
+onMounted(() => {
+   if (props.options?.search.default) {
+      search.value = props.options.search.default
+   }
+   if (props.options?.checkbox.default) {
+      checked.value = props.options.checkbox.default
+   }
+})
 </script>
 
 <template>
@@ -56,7 +66,7 @@ const filteredEmployeeList = () => {
             v-if="!options.checkbox.hide"
             class="dropdown-end"
             :label="options.checkbox.label"
-            :items="['Admin', 'Pengelola Gudang', 'Kasir']"
+            :items="options.checkbox.options"
             v-model="checked"
          />
       </div>
@@ -67,11 +77,6 @@ const filteredEmployeeList = () => {
             Reset
          </button>
       </div>
-      <slot
-         :items="filteredEmployeeList()"
-         :search="search"
-         :checked="checked"
-         :selected="selected"
-      ></slot>
+      <slot :items="filteredEmployeeList()" :search="search" :checked="checked"></slot>
    </main>
 </template>
