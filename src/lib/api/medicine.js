@@ -28,3 +28,11 @@ export async function addMedicine(data, config = {}) {
       ...config,
    })
 }
+
+export async function restockMedicine(data, config = {}) {
+   return await request('/medicine/restock', {
+      method: 'POST',
+      data,
+      ...config,
+   })
+}
