@@ -22,9 +22,7 @@ const props = defineProps({
          <span class="sidebar-menu_title whitespace-nowrap">{{ props.label }}</span>
          <SidebarTooltip class="left-14" :label="props.label" />
       </summary>
-      <ul
-         class="md:transition-transform md:duration-300 before:border-base-100 before:border-[1px] group-hover:before:border-neutral"
-      >
+      <ul class="before:border-base-100 before:border-[1px] group-hover:before:border-neutral">
          <li
             v-for="(menu, index) in props.submenu"
             :key="index"
