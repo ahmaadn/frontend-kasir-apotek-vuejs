@@ -51,6 +51,19 @@ export const useUserStore = defineStore('userStore', {
          this.fullname = ''
       },
       getInfo() {
+         const { userid, fullname, roleid, exp } = jwtDecode(this.token)
+         const today = new Date().getTime()
+
+         if (today > exp * 1000) {
+            this.logout()
+            throw new Error("Token's expired")
+         }
+
+         this.userId = userid
+         this.role = roleid
+         this.fullname = fullname
+      },
+      fetchInfo() {
          return new Promise((resolve, reject) => {
             detailUser(this.userId)
                .then((res) => {
@@ -71,5 +84,4 @@ export const useUserStore = defineStore('userStore', {
          })
       },
    },
-   persist: true,
 })
