@@ -107,6 +107,7 @@ onMounted(async () => {
          v-model:items="filterItems"
          v-model:dataTable="dataTable"
          v-slot="{ items }"
+         @reset="onReset"
       >
          <EasyDataTable
             ref="dataTable"
