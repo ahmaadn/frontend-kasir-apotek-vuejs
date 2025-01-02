@@ -22,9 +22,9 @@ const form = useForm({
       z.object({
          medicinename: z.string(),
          brand: z.string(),
-         price: z.number(),
+         price: z.number().int().positive().min(1),
          unit: z.enum(optionUnits),
-         stock: z.number(),
+         stock: z.number().int().positive().min(1),
          expirationdate: z.coerce.date(),
          categories: z.array(z.string()),
       }),
