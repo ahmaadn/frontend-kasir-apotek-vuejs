@@ -76,11 +76,6 @@ onMounted(() => {
             Reset
          </button>
       </div>
-      <slot
-         :items="filteredEmployeeList()"
-         :search="search"
-         :checked="checked"
-         :selected="selected"
-      ></slot>
+      <slot :items="filteredEmployeeList()" :search="search" :checked="checked"></slot>
    </main>
 </template>
