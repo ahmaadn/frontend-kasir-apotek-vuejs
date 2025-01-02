@@ -20,3 +20,11 @@ export async function medicineByCategory(categoryId, config = {}) {
       ...config,
    })
 }
+
+export async function addMedicine(data, config = {}) {
+   return await request('/medicine/add', {
+      method: 'POST',
+      data,
+      ...config,
+   })
+}

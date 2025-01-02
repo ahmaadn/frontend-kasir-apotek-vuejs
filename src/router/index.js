@@ -86,6 +86,15 @@ const routers = [
             },
          },
          {
+            path: 'add',
+            name: 'AddMedicine',
+            component: () => import('@/views/medicine/add-view.vue'),
+            meta: {
+               roles: ['ADM', 'WRH'],
+               title: 'Tambah Obat',
+            },
+         },
+         {
             path: 'categories',
             name: 'MedicineCategory',
             component: () => import('@/views/category/index-view.vue'),
