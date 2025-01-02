@@ -15,12 +15,13 @@ const items = defineModel('items', { required: true })
 const dataTable = defineModel('dataTable', { required: true })
 const search = defineModel('search', { default: '' })
 const checked = defineModel('checked', { default: [] })
+const emit = defineEmits(['reset'])
 
 const onReset = () => {
    dataTable.value.updateRowsPerPageActiveOption(dataTable.value?.rowsPerPageOptions[0])
    search.value = props.options?.search.reset || ''
    checked.value = props.options?.search.reset || []
-   props.options?.onReset()
+   emit('reset')
 }
 
 const filteredEmployeeList = () => {

@@ -84,6 +84,10 @@ const loadCategory = async () => {
    loading.value = false
 }
 
+const onReset = () => {
+   selected.value = []
+}
+
 onMounted(async () => {
    await fetchMedicines()
    await loadCategory()
