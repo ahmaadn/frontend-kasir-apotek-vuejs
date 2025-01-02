@@ -1,0 +1,22 @@
+import request from '../request'
+
+export async function listMedicines(config = {}) {
+   return await request('/medicine', {
+      method: 'GET',
+      ...config,
+   })
+}
+
+export async function medicineDetail(medicineId, config = {}) {
+   return await request(`/medicine/${medicineId}`, {
+      method: 'GET',
+      ...config,
+   })
+}
+
+export async function medicineByCategory(categoryId, config = {}) {
+   return await request(`/medicine/category/${categoryId}`, {
+      method: 'GET',
+      ...config,
+   })
+}

@@ -77,6 +77,15 @@ const routers = [
       component: DefaultLayout,
       children: [
          {
+            path: '',
+            name: 'Medicine',
+            component: () => import('@/views/medicine/index-view.vue'),
+            meta: {
+               roles: ['ADM', 'WRH'],
+               title: 'Daftar Obat',
+            },
+         },
+         {
             path: 'categories',
             name: 'MedicineCategory',
             component: () => import('@/views/category/index-view.vue'),
