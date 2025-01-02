@@ -11,9 +11,9 @@ async function handlePermission(to, next) {
    const userStore = useUserStore()
    const appStore = useAppStore()
 
-   const { role } = await userStore.getInfo()
+   userStore.getInfo()
 
-   if (to.meta.roles && to.meta.roles.includes(role.roleid)) {
+   if (to.meta.roles && to.meta.roles.includes(userStore.getRole)) {
       appStore.generateSidebarMenu()
       next()
    } else {
