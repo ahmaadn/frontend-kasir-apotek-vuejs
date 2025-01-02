@@ -121,7 +121,7 @@ onMounted(fetchMedicines)
                {{ currency(price) }}
             </template>
             <template #item-action="item">
-               <slot name="action" :item="item"> </slot>
+               <slot name="action" :item="item" :fetchMedicines="fetchMedicines"> </slot>
             </template>
          </EasyDataTable>
       </TableFilter>
