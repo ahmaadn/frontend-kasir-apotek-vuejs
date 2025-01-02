@@ -4,18 +4,18 @@ import '@/assets/css/table.css'
 import 'vue-select/dist/vue-select.css'
 
 import { TableFilter, TablePagination } from '@/components/Table'
+import SelectCategory from '../SelectCategory.vue'
 import { listMedicines } from '@/lib/api/medicine'
 import { onMounted, ref } from 'vue'
 import { toast } from 'vue-sonner'
 import { formatDate, currency } from '@/lib/utils'
-import { getCategoryMedicine } from '@/lib/api/category'
 import { computed } from 'vue'
 
 const loading = ref(false)
 const medicines = ref([])
 const dataTable = ref()
 const selected = ref([])
-const categories = ref([])
+
 const filterItems = computed(() => {
    if (selected.value.length === 0) {
       return medicines.value
@@ -72,40 +72,16 @@ const fetchMedicines = async () => {
    loading.value = false
 }
 
-const loadCategory = async () => {
-   await getCategoryMedicine()
-      .then((res) => {
-         const { data } = res.data
-         categories.value = data
-      })
-      .catch((err) => {
-         console.log(err)
-      })
-   loading.value = false
-}
-
 const onReset = () => {
    selected.value = []
 }
 
-onMounted(async () => {
-   await fetchMedicines()
-   await loadCategory()
-})
+onMounted(fetchMedicines)
 </script>
 
 <template>
    <div class="p-6 space-y-6">
-      <v-select
-         multiple
-         v-model="selected"
-         label="categoryname"
-         placeholder="Select Category"
-         :options="categories"
-         :reduce="(category) => category.categoryid"
-         :loading="loading"
-         :disabled="loading"
-      />
+      <SelectCategory v-model:selected="selected" />
       <TableFilter
          :options="options"
          v-model:items="filterItems"
