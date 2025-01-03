@@ -5,11 +5,10 @@ import '@/assets/css/table.css'
 import { TableFilter, TablePagination } from '@/components/Table'
 import { FormInput, FormTextarea } from '@/components/Form'
 import { DialogForm } from '@/components/Dialog'
-import { cretaeCategoryMedicine, getCategoryMedicine } from '@/lib/api/category'
 import { onMounted, ref } from 'vue'
-import { toast } from 'vue-sonner'
 import * as z from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
+import { useCategoryStore } from '@/stores/category'
 
 const options = {
    checkbox: {
@@ -34,22 +33,9 @@ const headers = [
    { text: 'description', value: 'categorydescription' },
 ]
 
-const categories = ref([])
 const loading = ref(true)
 const dataTable = ref()
-
-const loadCategory = async () => {
-   await getCategoryMedicine()
-      .then((res) => {
-         const data = res.data
-         categories.value = data.data
-         toast.success(data.message)
-      })
-      .catch((err) => {
-         console.log(err)
-      })
-   loading.value = false
-}
+const useCategory = useCategoryStore()
 
 const validationSchema = toTypedSchema(
    z.object({
@@ -60,19 +46,16 @@ const validationSchema = toTypedSchema(
 
 const onSubmit = async (values, closeModal) => {
    loading.value = true
-   await cretaeCategoryMedicine(values)
-      .then(async (res) => {
-         toast.success(res.data.successes[0])
-         await loadCategory()
-      })
-      .catch((error) => {
-         console.error(error)
-      })
+   await useCategory.createCategories(values)
    loading.value = false
    closeModal()
 }
 
-onMounted(loadCategory)
+onMounted(async () => {
+   loading.value = true
+   await useCategory.fetchCategories()
+   loading.value = false
+})
 </script>
 <template>
    <div class="bg-base-100 shadow border rounded">
@@ -102,7 +85,7 @@ onMounted(loadCategory)
          <TableFilter
             :options="options"
             v-model:dataTable="dataTable"
-            v-model:items="categories"
+            v-model:items="useCategory.categories"
             v-slot="{ items }"
          >
             <EasyDataTable
