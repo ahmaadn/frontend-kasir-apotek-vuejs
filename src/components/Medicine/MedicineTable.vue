@@ -5,22 +5,21 @@ import 'vue-select/dist/vue-select.css'
 
 import { TableFilter, TablePagination } from '@/components/Table'
 import SelectCategory from '../SelectCategory.vue'
-import { listMedicines } from '@/lib/api/medicine'
 import { onMounted, ref } from 'vue'
-import { toast } from 'vue-sonner'
 import { formatDate, currency } from '@/lib/utils'
 import { computed } from 'vue'
+import { useMedicineStore } from '@/stores/medicine'
 
 const loading = ref(false)
-const medicines = ref([])
 const dataTable = ref()
 const selected = ref([])
+const useMedicine = useMedicineStore()
 
 const filterItems = computed(() => {
    if (selected.value.length === 0) {
-      return medicines.value
+      return useMedicine.mediciness
    }
-   return medicines.value.filter((medicine) => {
+   return useMedicine.mediciness.filter((medicine) => {
       return medicine.categories.some((category) => {
          return selected.value.includes(category.categoryID)
       })
@@ -58,25 +57,15 @@ const headers = [
    { text: 'Aksi', value: 'action' },
 ]
 
-const fetchMedicines = async () => {
-   loading.value = true
-   await listMedicines()
-      .then((response) => {
-         const { data, message } = response.data
-         medicines.value = data
-         toast.success(message)
-      })
-      .catch((error) => {
-         console.log(error)
-      })
-   loading.value = false
-}
-
 const onReset = () => {
    selected.value = []
 }
 
-onMounted(fetchMedicines)
+onMounted(async () => {
+   loading.value = true
+   await useMedicine.fetchMediciness()
+   loading.value = false
+})
 </script>
 
 <template>
@@ -121,7 +110,7 @@ onMounted(fetchMedicines)
                {{ currency(price) }}
             </template>
             <template #item-action="item">
-               <slot name="action" :item="item" :fetchMedicines="fetchMedicines"> </slot>
+               <slot name="action" :item="item"> </slot>
             </template>
          </EasyDataTable>
       </TableFilter>

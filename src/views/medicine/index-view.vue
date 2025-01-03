@@ -10,15 +10,11 @@ import { MedicineTable, MedicineRestock } from '@/components/Medicine'
          </router-link>
       </div>
       <MedicineTable>
-         <template #action="{ item, fetchMedicines }">
+         <template #action="{ item }">
             <div class="flex flex-row gap-2">
                <button class="btn btn-xs btn-error">Delete</button>
                <button class="btn btn-xs btn-warning">Edit</button>
-               <MedicineRestock
-                  :medicineid="item.medicineID"
-                  :medicinename="item.medicineName"
-                  @after:submit="fetchMedicines()"
-               />
+               <MedicineRestock :medicineid="item.medicineID" :medicinename="item.medicineName" />
             </div>
          </template>
       </MedicineTable>

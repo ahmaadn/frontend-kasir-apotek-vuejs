@@ -6,16 +6,14 @@ import { useForm, useFieldArray, ErrorMessage } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { ref } from 'vue'
-import { toast } from 'vue-sonner'
 import { watch } from 'vue'
-import { addMedicine } from '@/lib/api/medicine'
 import { useRouter } from 'vue-router'
+import { useMedicineStore } from '@/stores/medicine'
 
 const selected = ref([])
 const loading = ref(false)
 const router = useRouter()
-
-const optionUnits = ['BOX', 'BTL', 'SACC', 'TUBE', 'STRIP', 'KAPSUL']
+const useMedicine = useMedicineStore()
 
 const form = useForm({
    validationSchema: toTypedSchema(
@@ -23,7 +21,7 @@ const form = useForm({
          medicinename: z.string(),
          brand: z.string(),
          price: z.number().int().positive().min(1),
-         unit: z.enum(optionUnits),
+         unit: z.enum(useMedicine.getUnits),
          stock: z.number().int().positive().min(1),
          expirationdate: z.coerce.date(),
          categories: z.array(z.string()),
@@ -39,15 +37,10 @@ watch(selected, () => {
 const onSubmit = form.handleSubmit(async (values) => {
    loading.value = true
    values.expirationdate = dateToStr(values.expirationdate)
-   await addMedicine(values)
-      .then(async (res) => {
-         const { successes } = res.data
-         toast.success(successes[0])
-         await router.push({ name: 'Medicine' })
-      })
-      .catch((err) => {
-         console.error(err)
-      })
+   const success = await useMedicine.createMediciness(values)
+   if (success) {
+      await router.push({ name: 'Medicine' })
+   }
    loading.value = false
 })
 </script>
@@ -62,7 +55,7 @@ const onSubmit = form.handleSubmit(async (values) => {
             <FormSelect
                name="unit"
                label="Unit"
-               :options="optionUnits"
+               :options="useMedicine.getUnits"
                placeholder="Satuan Unit"
             ></FormSelect>
             <FormInput name="stock" label="Amount" type="number" />
