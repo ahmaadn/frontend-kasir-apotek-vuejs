@@ -4,9 +4,8 @@ import { FormInput } from '../Form'
 import { DialogForm } from '../Dialog'
 import * as z from 'zod'
 import { dateToStr } from '@/lib/utils'
-import { toast } from 'vue-sonner'
 import { ref } from 'vue'
-import { restockMedicine } from '@/lib/api/medicine'
+import { useMedicineStore } from '@/stores/medicine'
 
 const props = defineProps({
    medicineid: {
@@ -19,9 +18,8 @@ const props = defineProps({
    },
 })
 
-const emit = defineEmits(['after:submit'])
-
 const loading = ref(false)
+const medicineStore = useMedicineStore()
 
 const validationSchema = toTypedSchema(
    z.object({
@@ -38,15 +36,9 @@ const onSubmit = async (values, closeModal) => {
       medicineid: props.medicineid,
       medicinename: props.medicinename,
    }
-   await restockMedicine(values)
-      .then((res) => {
-         toast.success(res.data.message)
-      })
-      .catch((err) => {
-         console.log(err)
-      })
+   await medicineStore.restockMediciness(values)
    closeModal()
-   emit('after:submit')
+   await medicineStore.fetchMediciness()
    loading.value = false
 }
 </script>

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { listCategories, createCategories } from '@/lib/api/category'
 import { toast } from 'vue-sonner'
 
-export const useCategoryStore = defineStore('useCategory', {
+export const useCategoryStore = defineStore('categoryStore', {
    state: () => ({
       categories: [],
    }),
