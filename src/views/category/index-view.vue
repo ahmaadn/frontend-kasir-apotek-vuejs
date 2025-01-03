@@ -85,7 +85,6 @@ onMounted(loadCategory)
             @submit="onSubmit"
          >
             <div class="min-h-80 mt-4">
-               <p></p>
                <FormInput
                   name="categoryname"
                   label="Nama Kategori"
