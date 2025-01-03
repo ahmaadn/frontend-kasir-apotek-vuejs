@@ -1,26 +1,19 @@
 <script setup>
 import { ref } from 'vue'
-import { getCategoryMedicine } from '@/lib/api/category'
 import { onMounted } from 'vue'
+import { useCategoryStore } from '@/stores/category'
 
 const selected = defineModel('selected', { type: Array, required: true, default: [] })
-const categories = ref([])
 const loading = ref(false)
+const useCategory = useCategoryStore()
 
-const fecthCategory = async () => {
-   loading.value = true
-   await getCategoryMedicine()
-      .then((res) => {
-         const { data } = res.data
-         categories.value = data
-      })
-      .catch((err) => {
-         console.log(err)
-      })
-   loading.value = false
-}
-
-onMounted(fecthCategory)
+onMounted(async () => {
+   if (useCategory.categories.length === 0) {
+      loading.value = true
+      await useCategory.fetchCategories()
+      loading.value = false
+   }
+})
 </script>
 
 <template>
@@ -29,7 +22,7 @@ onMounted(fecthCategory)
       v-model="selected"
       label="categoryname"
       placeholder="Select Category"
-      :options="categories"
+      :options="useCategory.categories"
       :reduce="(category) => category.categoryid"
       :loading="loading"
       :disabled="loading"
