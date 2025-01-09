@@ -1,5 +1,6 @@
 import {
    createMediciness,
+   deleteMedicine,
    editMedicine,
    listMediciness,
    restockMediciness,
@@ -67,7 +68,17 @@ export const useMedicineStore = defineStore('medicineStore', {
          return this.mediciness.filter((medicine) => medicine.medicineID === id)
       },
       async updateMedicine(id, data) {
-         await editMedicine(id, data).then((response) => toast.success(response.data.message))
+         await editMedicine(id, data)
+            .then((response) => toast.success(response.data.message))
+            .catch((error) => console.error(error))
+      },
+      async deleteMedicine(id) {
+         await deleteMedicine(id)
+            .then(async (response) => {
+               toast.success(response.data.message)
+               await this.fetchMediciness()
+            })
+            .catch((error) => console.error(error))
       },
    },
 })

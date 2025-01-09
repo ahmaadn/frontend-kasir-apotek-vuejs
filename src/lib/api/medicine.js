@@ -44,3 +44,10 @@ export async function editMedicine(id, data, config = {}) {
       ...config,
    })
 }
+
+export async function deleteMedicine(id, config = {}) {
+   return await request(`/medicine/${id}`, {
+      method: 'DELETE',
+      ...config,
+   })
+}
