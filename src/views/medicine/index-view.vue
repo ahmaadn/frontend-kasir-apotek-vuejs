@@ -1,5 +1,5 @@
 <script setup>
-import { MedicineTable, MedicineRestock } from '@/components/Medicine'
+import { MedicineTable, MedicineRestock, MedicineDeleteDialog } from '@/components/Medicine'
 </script>
 <template>
    <main class="bg-base-100 shadow border rounded divide-y">
@@ -12,7 +12,7 @@ import { MedicineTable, MedicineRestock } from '@/components/Medicine'
       <MedicineTable>
          <template #action="{ item }">
             <div class="flex flex-row gap-2">
-               <button class="btn btn-xs btn-error">Delete</button>
+               <MedicineDeleteDialog :id="item.medicineID" />
                <router-link
                   :to="{ name: 'UpdateMedicine', params: { id: item.medicineID } }"
                   class="btn btn-xs btn-warning"
