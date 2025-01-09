@@ -13,7 +13,11 @@ import { MedicineTable, MedicineRestock } from '@/components/Medicine'
          <template #action="{ item }">
             <div class="flex flex-row gap-2">
                <button class="btn btn-xs btn-error">Delete</button>
-               <button class="btn btn-xs btn-warning">Edit</button>
+               <router-link
+                  :to="{ name: 'UpdateMedicine', params: { id: item.medicineID } }"
+                  class="btn btn-xs btn-warning"
+                  >Edit</router-link
+               >
                <MedicineRestock :medicineid="item.medicineID" :medicinename="item.medicineName" />
             </div>
          </template>

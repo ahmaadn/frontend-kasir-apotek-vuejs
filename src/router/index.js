@@ -95,6 +95,16 @@ const routers = [
             },
          },
          {
+            path: 'update/:id',
+            name: 'UpdateMedicine',
+            component: () => import('@/views/medicine/update-view.vue'),
+            props: true,
+            meta: {
+               roles: ['ADM', 'WRH'],
+               title: 'Update Obat',
+            },
+         },
+         {
             path: 'categories',
             name: 'MedicineCategory',
             component: () => import('@/views/category/index-view.vue'),

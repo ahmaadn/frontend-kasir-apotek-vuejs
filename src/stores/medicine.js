@@ -1,4 +1,9 @@
-import { createMediciness, listMediciness, restockMediciness } from '@/lib/api/medicine'
+import {
+   createMediciness,
+   editMedicine,
+   listMediciness,
+   restockMediciness,
+} from '@/lib/api/medicine'
 import { defineStore } from 'pinia'
 import { toast } from 'vue-sonner'
 
@@ -50,19 +55,19 @@ export const useMedicineStore = defineStore('medicineStore', {
                }
                await this.fetchMediciness()
             })
-            .catch((error) => {
-               console.error(error)
-            })
+            .catch((error) => console.error(error))
          return success
       },
       async restockMediciness(values) {
          await restockMediciness(values)
-            .then((response) => {
-               toast.success(response.data.message)
-            })
-            .catch((error) => {
-               console.log(error)
-            })
+            .then((response) => toast.success(response.data.message))
+            .catch((error) => console.error(error))
+      },
+      getMedicineById(id) {
+         return this.mediciness.filter((medicine) => medicine.medicineID === id)
+      },
+      async updateMedicine(id, data) {
+         await editMedicine(id, data).then((response) => toast.success(response.data.message))
       },
    },
 })

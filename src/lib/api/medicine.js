@@ -36,3 +36,11 @@ export async function restockMediciness(data, config = {}) {
       ...config,
    })
 }
+
+export async function editMedicine(id, data, config = {}) {
+   return await request(`/medicine/${id}`, {
+      method: 'PATCH',
+      data,
+      ...config,
+   })
+}
