@@ -115,6 +115,30 @@ const routers = [
          },
       ],
    },
+   {
+      path: '/history-medicine',
+      component: DefaultLayout,
+      children: [
+         {
+            path: '',
+            name: 'HistoryMedicine',
+            component: () => import('@/views/history/index-view.vue'),
+            meta: {
+               roles: ['ADM', 'WRH'],
+               title: 'Histori Obat',
+            },
+         },
+         {
+            path: ':id',
+            name: 'DetailHistoryMedicine',
+            component: () => import('@/views/history/detail-view.vue'),
+            meta: {
+               roles: ['ADM', 'WRH'],
+               title: 'Histori Obat',
+            },
+         },
+      ],
+   },
 ]
 
 const router = createRouter({

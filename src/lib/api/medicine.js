@@ -51,3 +51,17 @@ export async function deleteMedicine(id, config = {}) {
       ...config,
    })
 }
+
+export async function listBatchMedicine(config = {}) {
+   return await request('/medicine/batch', {
+      method: 'GET',
+      ...config,
+   })
+}
+
+export async function getbatchMedicine(id, ...config) {
+   return await request(`/medicine/batch/${id}`, {
+      method: 'GET',
+      ...config,
+   })
+}
