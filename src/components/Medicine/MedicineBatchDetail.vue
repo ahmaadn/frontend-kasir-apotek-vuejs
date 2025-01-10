@@ -27,7 +27,13 @@ const filterItems = computed(() => {
 
 const options = {
    checkbox: {
-      hide: true,
+      label: 'Avalailable',
+      options: ['Available', 'Deleted'],
+      filtered: function (items, checked) {
+         return items.filter((item) => {
+            return checked.includes(item.isDeleted ? 'Deleted' : 'Available')
+         })
+      },
    },
    search: {
       default: '',
@@ -43,7 +49,7 @@ const headers = [
    { text: 'Name', value: 'medicinename', sortable: true, fixed: false, width: 300 },
    { text: 'Brand', value: 'brand' },
    { text: 'harga', value: 'price', sortable: true },
-   { text: 'Stock', value: 'stock', sortable: true },
+   { text: 'Amount', value: 'amount', sortable: true },
    { text: 'Unit', value: 'unit' },
 ]
 
