@@ -6,8 +6,7 @@ import { UserDeleteDialog } from '@/components/User'
 import { TableFilter, TablePagination } from '@/components/Table'
 import { useUserStore } from '@/stores/user'
 import { onMounted, ref } from 'vue'
-import { getUserList } from '@/lib/api/user'
-import { toast } from 'vue-sonner'
+import { useEmployeeStore } from '@/stores/employee'
 
 const options = {
    checkbox: {
@@ -40,19 +39,11 @@ const headers = [
 const userStore = useUserStore()
 const loading = ref(true)
 const dataTable = ref()
-const employeeList = ref([])
+const employeeStore = useEmployeeStore()
 
 const loadEmployeeList = async () => {
    loading.value = true
-   await getUserList()
-      .then((res) => {
-         const data = res.data
-         employeeList.value = data.data
-         toast.success(data.message)
-      })
-      .catch((err) => {
-         console.log(err)
-      })
+   await employeeStore.fetchEmployee()
    loading.value = false
 }
 
@@ -69,7 +60,7 @@ onMounted(loadEmployeeList)
       <div class="p-6 space-y-6">
          <TableFilter
             :options="options"
-            v-model:items="employeeList"
+            v-model:items="employeeStore.employees"
             v-model:dataTable="dataTable"
             v-slot="{ items }"
          >
@@ -111,7 +102,7 @@ onMounted(loadEmployeeList)
                      <UserDeleteDialog
                         :userid="userid"
                         v-if="userid != userStore.getUserId"
-                        @on-success="loadEmployeeList"
+                        @on-success="loadEmployeeList()"
                      />
 
                      <router-link
