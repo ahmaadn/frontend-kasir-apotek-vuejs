@@ -14,3 +14,10 @@ export async function createCategories(data, config = {}) {
       ...config,
    })
 }
+
+export async function deleteCategories(id, config) {
+   return await request(`/medicine/category/${id}`, {
+      method: 'DELETE',
+      ...config,
+   })
+}

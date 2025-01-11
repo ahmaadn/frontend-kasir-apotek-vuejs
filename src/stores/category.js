@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { listCategories, createCategories } from '@/lib/api/category'
+import { listCategories, createCategories, deleteCategories } from '@/lib/api/category'
 import { toast } from 'vue-sonner'
 
 export const useCategoryStore = defineStore('categoryStore', {
@@ -41,6 +41,12 @@ export const useCategoryStore = defineStore('categoryStore', {
             .catch((error) => {
                console.error(error)
             })
+      },
+      async deleteCategory(id) {
+         await deleteCategories(id).then(async (response) => {
+            toast.success(response.data.message)
+            await this.fetchCategories()
+         })
       },
    },
 })
