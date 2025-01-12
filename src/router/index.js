@@ -169,6 +169,21 @@ const routers = [
          },
       ],
    },
+   {
+      path: '/history-transaction',
+      component: DefaultLayout,
+      children: [
+         {
+            path: '',
+            name: 'HistoryTransaction',
+            component: () => import('@/views/transaction/history-view.vue'),
+            meta: {
+               roles: ['ADM', 'CSR'],
+               title: 'Histori Transaksi',
+            },
+         },
+      ],
+   },
 ]
 
 const router = createRouter({

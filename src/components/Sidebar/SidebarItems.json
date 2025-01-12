@@ -63,5 +63,11 @@
     "icon": "mdi:history",
     "url": "/history-medicine",
     "roles": ["ADM", "WRH"]
+  },
+  {
+    "label": "History Transaksi",
+    "icon": "mdi:history",
+    "url": "/history-transaction",
+    "roles": ["ADM", "CSR"]
   }
 ]
