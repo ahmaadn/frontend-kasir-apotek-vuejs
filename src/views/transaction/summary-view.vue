@@ -8,10 +8,10 @@ import * as z from 'zod'
 import { ref } from 'vue'
 import { onMounted } from 'vue'
 import { SuccessPayment } from '@/components/Transaction'
-import { toast } from 'vue-sonner'
-import { createTransaction } from '@/lib/api/transaction'
+import { useTransactionStore } from '@/stores/transaction'
 
 const cartStore = useCartStore()
+const transactionStore = useTransactionStore()
 const payment = ['cash', 'qris']
 const open = ref(false)
 const loading = ref(false)
@@ -29,26 +29,13 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit(async (values) => {
    loading.value = true
-   cartStore.setBuyer(values)
-   const medicines = cartStore.carts.map((cart) => ({
-      medicineid: cart.medicineid,
-      amount: cart.amount,
-   }))
-   await createTransaction({
-      ...cartStore.buyer,
-      medicines,
-   })
-      .then((response) => {
-         open.value = true
-         loading.value = false
-         responeMessages.value = response.data
-         toast.success(response.data.message)
-         cartStore.clearCarts()
-         cartStore.clearBuyer()
-      })
-      .catch(() => {
-         loading.value = false
-      })
+
+   const { success, messages } = await transactionStore.cretaeTransaction(values)
+   if (success) {
+      open.value = true
+      responeMessages.value = messages
+   }
+   loading.value = false
 })
 
 onMounted(cartStore.clearBuyer)
