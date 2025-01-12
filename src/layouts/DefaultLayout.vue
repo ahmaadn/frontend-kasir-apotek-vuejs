@@ -3,9 +3,12 @@ import { useAppStore } from '@/stores/app'
 import { useUserStore } from '@/stores/user'
 import { useRouter, useRoute } from 'vue-router'
 import { SidebarMain, SidebarBurger } from '@/components/Sidebar'
+import { Icon } from '@iconify/vue'
+import { useCartStore } from '@/stores/cart'
 
 const appStore = useAppStore()
 const userStote = useUserStore()
+const cartStore = useCartStore()
 const router = useRouter()
 const route = useRoute()
 
@@ -37,7 +40,17 @@ const logout = async () => {
                      >
                   </div>
                   <div class="navbar-end">
-                     <button class="btn btn-ghost btn-sm" @click="logout">Logout</button>
+                     <div class="flex flex-row gap-4">
+                        <div class="indicator">
+                           <span class="indicator-item badge badge-secondary">{{
+                              cartStore.carts.length
+                           }}</span>
+                           <router-link class="btn btn-sm btn-square">
+                              <Icon icon="mdi:cart" width="24" height="24" />
+                           </router-link>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" @click="logout">Logout</button>
+                     </div>
                   </div>
                </div>
             </div>

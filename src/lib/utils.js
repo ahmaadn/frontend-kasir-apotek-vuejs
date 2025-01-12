@@ -1,3 +1,7 @@
+export function clamp(number, min, max) {
+   return Math.min(Math.max(min, number), max)
+}
+
 export function currency(value) {
    return Intl.NumberFormat('id', { currency: 'IDR', style: 'currency' }).format(value)
 }
