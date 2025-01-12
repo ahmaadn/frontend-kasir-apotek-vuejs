@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 export const useCartStore = defineStore('cartStore', {
    state: () => ({
       carts: [],
+      buyer: {},
    }),
    getters: {
       totalPrice: (state) => {
@@ -29,6 +30,12 @@ export const useCartStore = defineStore('cartStore', {
       },
       clearCarts() {
          this.carts = []
+      },
+      setBuyer(data) {
+         this.buyer = data
+      },
+      clearBuyer() {
+         this.buyer = {}
       },
    },
    persist: true,
