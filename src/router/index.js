@@ -139,6 +139,36 @@ const routers = [
          },
       ],
    },
+   {
+      path: '/transaction',
+      component: DefaultLayout,
+      children: [
+         {
+            path: '',
+            name: 'Transaction',
+            component: () => import('@/views/transaction/index-view.vue'),
+            meta: {
+               roles: ['CSR'],
+               title: 'Transaksi',
+            },
+         },
+      ],
+   },
+   {
+      path: '/payment',
+      component: DefaultLayout,
+      children: [
+         {
+            path: '',
+            name: 'Payment',
+            component: () => import('@/views/transaction/summary-view.vue'),
+            meta: {
+               roles: ['CSR'],
+               title: 'Pembayaran',
+            },
+         },
+      ],
+   },
 ]
 
 const router = createRouter({
