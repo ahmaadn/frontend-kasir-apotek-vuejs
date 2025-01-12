@@ -22,8 +22,6 @@ export const useTransactionStore = defineStore('transactionStore', {
             .then((respones) => {
                messages = respones.data
                success = true
-               cart.clearCarts()
-               cart.clearBuyer()
                toast.success(messages.message)
             })
             .catch((error) => {

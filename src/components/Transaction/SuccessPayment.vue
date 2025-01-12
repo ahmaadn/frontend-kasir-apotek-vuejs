@@ -6,7 +6,6 @@ import { currency } from '@/lib/utils'
 const props = defineProps({ responeMessages: Object })
 const open = defineModel('open', { default: false })
 const carts = useCartStore()
-
 const closeModal = () => {
    open.value = false
    carts.clearCarts()
@@ -46,16 +45,32 @@ const closeModal = () => {
                      <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                         Payment successful
                      </DialogTitle>
+                     <div class="text-gray-500">
+                        {{ props.responeMessages.message }}
+                     </div>
                      <div class="mt-2 text-gray-500">
-                        <p>
-                           {{ props.responeMessages.message }}
-                        </p>
-                        <p>
-                           Uang Kembalian
-                           <span class="font-normal">{{
-                              currency(props.responeMessages.change)
-                           }}</span>
-                        </p>
+                        <div class="grid grid-cols-2">
+                           <p>Total</p>
+                           <p class="font-normal text-end">
+                              {{ currency(props.responeMessages.total) }}
+                           </p>
+                        </div>
+                        <div class="grid grid-cols-2">
+                           <p>Dibayar</p>
+                           <p class="font-normal text-end">
+                              {{
+                                 currency(
+                                    props.responeMessages.total + props.responeMessages.change,
+                                 )
+                              }}
+                           </p>
+                        </div>
+                        <div class="grid grid-cols-2">
+                           <p>Kembalian</p>
+                           <p class="font-normal text-end">
+                              {{ currency(props.responeMessages.change) }}
+                           </p>
+                        </div>
                      </div>
 
                      <div class="mt-4">
