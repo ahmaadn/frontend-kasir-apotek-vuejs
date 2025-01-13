@@ -19,8 +19,8 @@ export const useStats = defineStore('stateStore', {
       },
       async fetchReportStock() {},
 
-      async todayReportSales() {
-         if (!this.report_sales.length) {
+      async todayReportSales(refresh = false) {
+         if (!this.report_sales.length || refresh) {
             await this.fetchReportSales()
          }
          const today = dayjs().format('YYYY-MM-DD')

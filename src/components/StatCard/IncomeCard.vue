@@ -10,7 +10,7 @@ const report = ref({})
 const income = ref(0)
 
 onMounted(async () => {
-   report.value = await stats.todayReportSales()
+   report.value = await stats.todayReportSales(true)
    console.log(report.value)
 
    income.value = report.value.totalincome
