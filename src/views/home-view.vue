@@ -1,6 +1,8 @@
 <script setup>
 import { EmployeeCard, MedicineCard, IncomeCard } from '@/components/StatCard'
 import { useUserStore } from '@/stores/user'
+import { ReportTransaction } from '@/components/Report'
+import { BarTransaction, LineMedicineSold } from '@/components/Chart'
 
 const useUser = useUserStore()
 </script>
@@ -16,6 +18,24 @@ const useUser = useUserStore()
          <div class="stats shadow w-full">
             <MedicineCard />
          </div>
+      </section>
+      <section
+         class="flex flex-col md:grid grid-cols-2 gap-4"
+         v-if="useUser.isAdmin || useUser.isCashier"
+      >
+         <div class="card bg-base-100 rounded shadow p-0">
+            <div class="card-body p-6">
+               <BarTransaction />
+            </div>
+         </div>
+         <div class="card bg-base-100 rounded shadow p-0">
+            <div class="card-body p-6">
+               <LineMedicineSold />
+            </div>
+         </div>
+      </section>
+      <section v-if="useUser.isAdmin || useUser.isCashier">
+         <ReportTransaction />
       </section>
    </main>
 </template>

@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { useCartStore } from './cart'
 import { toast } from 'vue-sonner'
 import { useMedicineStore } from './medicine'
+import dayjs from 'dayjs'
 
 export const useTransactionStore = defineStore('transactionStore', {
    state: () => ({
@@ -12,6 +13,16 @@ export const useTransactionStore = defineStore('transactionStore', {
    actions: {
       setHistoryTransaction(data) {
          this.histories = data
+      },
+      async todayHistory() {
+         if (!this.histories.length) {
+            await this.fetchHistotyTransaction()
+         }
+         const today = dayjs().format('YYYY-MM-DD')
+         const historyToday = this.histories.filter(
+            (history) => dayjs(history.trdate).format('YYYY-MM-DD') === today,
+         )
+         return historyToday.length ? historyToday : {}
       },
       async cretaeTransaction(buyer) {
          const cart = useCartStore()
