@@ -11,9 +11,9 @@ const income = ref(0)
 
 onMounted(async () => {
    report.value = await stats.todayReportSales()
-   income.value = report.value.totalincome
+   income.value = report.value.totalincome || 0
    report.value = await stats.todayReportSales(true)
-   income.value = report.value.totalincome
+   income.value = report.value.totalincome || 0
 })
 </script>
 <template>
