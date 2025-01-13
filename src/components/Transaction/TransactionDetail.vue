@@ -1,49 +1,16 @@
 <script setup>
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { currency, formatDate } from '@/lib/utils'
-import { useMedicineStore } from '@/stores/medicine'
-import { ref } from 'vue'
-import { useTransactionStore } from '@/stores/transaction'
 
-const props = defineProps({ id: String })
-const useMedicine = useMedicineStore()
-const useTransaction = useTransactionStore()
-const transaction = ref({})
-const medicines = ref({})
-const open = ref(false)
-const loading = ref(false)
+defineProps({ transaction: Object, medicines: Object })
+const open = defineModel('open', { default: false })
 
 const closeModal = () => {
    open.value = false
 }
-
-const openModal = async () => {
-   loading.value = true
-   if (!useMedicine.mediciness.length) {
-      await useMedicine.fetchMediciness()
-   }
-   transaction.value = await useTransaction.detailTransaction(props.id)
-   medicines.value = transaction.value.medicines.map((medicineData) => {
-      let medicine = useMedicine.getMedicineById(medicineData.medicineid)
-      if (medicine.length >= 1) {
-         return {
-            ...medicineData,
-            ...medicine[0],
-         }
-      }
-      return medicineData
-   })
-   loading.value = false
-   open.value = true
-}
 </script>
 
 <template>
-   <div class="flex items-center justify-center">
-      <button class="btn btn-xs btn-success text-white" @click="openModal" :disabled="loading">
-         Detail
-      </button>
-   </div>
    <TransitionRoot appear :show="open" as="template">
       <Dialog as="div" class="relative z-10">
          <TransitionChild

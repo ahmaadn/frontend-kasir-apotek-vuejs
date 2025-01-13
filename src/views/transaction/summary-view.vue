@@ -7,8 +7,9 @@ import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { ref } from 'vue'
 import { onMounted } from 'vue'
-import { SuccessPayment } from '@/components/Transaction'
 import { useTransactionStore } from '@/stores/transaction'
+import { useMedicineStore } from '@/stores/medicine'
+import { TransactionDetail } from '@/components/Transaction'
 
 const cartStore = useCartStore()
 const transactionStore = useTransactionStore()
@@ -16,6 +17,9 @@ const payment = ['cash', 'qris']
 const open = ref(false)
 const loading = ref(false)
 const responeMessages = ref({})
+const medicineStore = useMedicineStore()
+const medicines = ref({})
+const transaction = ref({})
 
 const form = useForm({
    validationSchema: toTypedSchema(
@@ -34,9 +38,32 @@ const onSubmit = form.handleSubmit(async (values) => {
    if (success) {
       open.value = true
       responeMessages.value = messages
+      console.log(responeMessages)
+      await openDialog()
+      cartStore.clearCarts()
+      cartStore.clearBuyer()
    }
    loading.value = false
 })
+
+const openDialog = async () => {
+   open.value = false
+   if (!medicineStore.mediciness.length) {
+      await medicineStore.fetchMediciness()
+   }
+   transaction.value = responeMessages.value.data
+   medicines.value = transaction.value.medicines.map((medicineData) => {
+      let medicine = medicineStore.getMedicineById(medicineData.medicineid)
+      if (medicine.length >= 1) {
+         return {
+            ...medicineData,
+            ...medicine[0],
+         }
+      }
+      return medicineData
+   })
+   open.value = true
+}
 
 onMounted(cartStore.clearBuyer)
 </script>
@@ -74,7 +101,7 @@ onMounted(cartStore.clearBuyer)
                >
                   Bayar
                </button>
-               <SuccessPayment :respone-messages="responeMessages" v-model:open="open" />
+               <!-- <SuccessPayment :respone-messages="responeMessages" v-model:open="open" /> -->
             </form>
          </div>
          <div class="card bg-base-100 shadow border rounded h-fit">
@@ -97,5 +124,6 @@ onMounted(cartStore.clearBuyer)
             </div>
          </div>
       </div>
+      <TransactionDetail v-model:open="open" :transaction="transaction" :medicines="medicines" />
    </main>
 </template>

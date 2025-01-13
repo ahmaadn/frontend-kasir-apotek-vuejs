@@ -8,11 +8,16 @@ import { onMounted, ref } from 'vue'
 import { formatDate, currency } from '@/lib/utils'
 import { useTransactionStore } from '@/stores/transaction'
 import TransactionDetail from './TransactionDetail.vue'
+import { useMedicineStore } from '@/stores/medicine'
 
 const loading = ref(false)
 const dataTable = ref()
 const selected = ref([])
 const useTransaction = useTransactionStore()
+const medicineStore = useMedicineStore()
+const medicines = ref({})
+const transaction = ref({})
+const open = ref(false)
 
 const options = {
    checkbox: {
@@ -40,6 +45,27 @@ const headers = [
 
 const onReset = () => {
    selected.value = []
+}
+
+const openDialog = async (id) => {
+   open.value = false
+   loading.value = true
+   if (!medicineStore.mediciness.length) {
+      await medicineStore.fetchMediciness()
+   }
+   transaction.value = await useTransaction.detailTransaction(id)
+   medicines.value = transaction.value.medicines.map((medicineData) => {
+      let medicine = medicineStore.getMedicineById(medicineData.medicineid)
+      if (medicine.length >= 1) {
+         return {
+            ...medicineData,
+            ...medicine[0],
+         }
+      }
+      return medicineData
+   })
+   loading.value = false
+   open.value = true
 }
 
 onMounted(async () => {
@@ -98,10 +124,19 @@ onMounted(async () => {
                {{ currency(price) }}
             </template>
             <template #item-action="item">
-               <TransactionDetail :id="item.trid" />
+               <div class="flex items-center justify-center">
+                  <button
+                     class="btn btn-xs btn-success text-white"
+                     @click="openDialog(item.trid)"
+                     :disabled="loading"
+                  >
+                     Detail
+                  </button>
+               </div>
             </template>
          </EasyDataTable>
       </TableFilter>
       <TablePagination v-model:dataTable="dataTable" />
+      <TransactionDetail v-model:open="open" :transaction="transaction" :medicines="medicines" />
    </div>
 </template>
