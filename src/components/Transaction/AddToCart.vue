@@ -19,19 +19,21 @@ const increment = (value) => {
 }
 
 const updateCart = () => {
-   const amount = clamp(number.value, 0, props.item.stock)
+   if (number.value >= 1) {
+      const amount = clamp(number.value, 0, props.item.stock)
 
-   if (amount >= 0) {
-      cartsStore.addToCart(props.item.medicineID, amount, props.item)
+      if (amount >= 0) {
+         cartsStore.addToCart(props.item.medicineID, amount, props.item)
+      }
+      if (amount > 0) {
+         toast.success(
+            `obat ${props.item.medicineName} telah dimasukkan ke keranjang sebanyak ${amount}`,
+         )
+      } else if (amount == 0) {
+         toast.warning(`Obat ${props.item.medicineName} telah dihapus di keranjang`)
+      }
+      number.value = amount
    }
-   if (amount > 0) {
-      toast.success(
-         `obat ${props.item.medicineName} telah dimasukkan ke keranjang sebanyak ${amount}`,
-      )
-   } else if (amount == 0) {
-      toast.warning(`Obat ${props.item.medicineName} telah dihapus di keranjang`)
-   }
-   number.value = amount
 }
 const clearCart = () => {
    cartsStore.removeCart(props.item.medicineID)
