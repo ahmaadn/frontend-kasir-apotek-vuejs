@@ -2,6 +2,7 @@ import { createTransaction, detailTransaction, getTransaction } from '@/lib/api/
 import { defineStore } from 'pinia'
 import { useCartStore } from './cart'
 import { toast } from 'vue-sonner'
+import { useMedicineStore } from './medicine'
 
 export const useTransactionStore = defineStore('transactionStore', {
    state: () => ({
@@ -23,10 +24,26 @@ export const useTransactionStore = defineStore('transactionStore', {
          let messages = {}
 
          await createTransaction({ ...buyer, medicines })
-            .then((respones) => {
+            .then(async (respones) => {
                messages = respones.data
                success = true
                toast.success(messages.message)
+
+               const medicines = messages.medicines
+               if (medicines.length) {
+                  // menggunakan store medicine untuk mendapatkan detail obat
+                  const useMedicine = useMedicineStore()
+                  if (!useMedicine.mediciness) {
+                     await useMedicine.fetchMediciness()
+                  }
+                  // menampilkan pesan setip obat yang telah dibelu
+                  medicines.forEach((medicine) => {
+                     const medicineData = useMedicine.getMedicineById(medicine.medicineid)
+                     if (medicineData.length === 1) {
+                        toast(medicineData[0].medicineName, medicine.message)
+                     }
+                  })
+               }
             })
             .catch((error) => {
                const data = error.data
@@ -43,6 +60,10 @@ export const useTransactionStore = defineStore('transactionStore', {
       async fetchHistotyTransaction() {
          await getTransaction().then((respones) => {
             const { data } = respones.data
+            data.sort((a, b) => {
+               return new Date(b.trdate) - new Date(a.trdate)
+            })
+
             this.setHistoryTransaction(data)
          })
       },
