@@ -45,7 +45,7 @@ const logout = async () => {
                            <span class="indicator-item badge badge-secondary">{{
                               cartStore.carts.length
                            }}</span>
-                           <router-link class="btn btn-sm btn-square">
+                           <router-link :to="{ name: 'Payment' }" class="btn btn-sm btn-square">
                               <Icon icon="mdi:cart" width="24" height="24" />
                            </router-link>
                         </div>
