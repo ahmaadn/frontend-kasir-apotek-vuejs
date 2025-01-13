@@ -30,13 +30,12 @@ const options = {
 
 const headers = [
    { text: 'Tanggal', value: 'trdate', sortable: true, fixed: false },
-   { text: 'Total harga', value: 'total' },
    { text: 'Metode', value: 'payment', sortable: true },
-   { text: 'Kembalian', value: 'change', sortable: true },
+   { text: 'Total harga', value: 'total' },
    { text: 'Dibayar', value: 'amount_given' },
+   { text: 'Kembalian', value: 'change', sortable: true },
    { text: 'Pembeli', value: 'buyername' },
-   // { text: 'Petugas Kasir', value: 'kasir' },
-   { text: 'Petugas Kasir', value: 'action' },
+   { text: 'Aksi', value: 'action' },
 ]
 
 const onReset = () => {
