@@ -1,15 +1,17 @@
 <script setup>
-import StatCard from '@/components/StatCard.vue'
-import { EmployeeCard, MedicineCard } from '@/components/StatCard'
+import { EmployeeCard, MedicineCard, BasicCard } from '@/components/StatCard'
+import { useUserStore } from '@/stores/user'
+
+const useUser = useUserStore()
 </script>
 <template>
    <main class="flex gap-4 flex-col">
       <section class="flex md:flex-row gap-4 w-full flex-col">
-         <!-- <div class="stats shadow">
+         <div v-if="useUser.isAdmin" class="stats shadow">
             <EmployeeCard />
-         </div> -->
+         </div>
          <div class="stats shadow w-full">
-            <StatCard
+            <BasicCard
                title="Total Pendapatan"
                value="25.6K"
                icon="mdi:currency-usd"

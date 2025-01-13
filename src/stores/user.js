@@ -16,6 +16,9 @@ export const useUserStore = defineStore('userStore', {
       getUserId: (state) => state.userId,
       getRole: (state) => state.role,
       getFullname: (state) => state.fullname,
+      isAdmin: (state) => state.role === 'ADM',
+      isCashier: (state) => state.role === 'CSR',
+      isWarehouse: (state) => state.role === 'WRH',
    },
    actions: {
       login(data) {
