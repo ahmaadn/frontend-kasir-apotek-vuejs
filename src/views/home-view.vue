@@ -7,7 +7,7 @@ const useUser = useUserStore()
 <template>
    <main class="flex gap-4 flex-col">
       <section class="flex md:flex-row gap-4 w-full flex-col">
-         <div v-if="useUser.isAdmin" class="stats shadow">
+         <div v-if="useUser.isAdmin" class="stats shadow w-full">
             <EmployeeCard />
          </div>
          <div v-if="useUser.isAdmin || useUser.isCashier" class="stats shadow w-full">
