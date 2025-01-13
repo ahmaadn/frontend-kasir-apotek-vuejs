@@ -1,5 +1,5 @@
 <script setup>
-import { EmployeeCard, MedicineCard, BasicCard } from '@/components/StatCard'
+import { EmployeeCard, MedicineCard, IncomeCard } from '@/components/StatCard'
 import { useUserStore } from '@/stores/user'
 
 const useUser = useUserStore()
@@ -10,14 +10,8 @@ const useUser = useUserStore()
          <div v-if="useUser.isAdmin" class="stats shadow">
             <EmployeeCard />
          </div>
-         <div class="stats shadow w-full">
-            <BasicCard
-               title="Total Pendapatan"
-               value="25.6K"
-               icon="mdi:currency-usd"
-               class="text-success"
-               desc="Bulan ini"
-            />
+         <div v-if="useUser.isAdmin || useUser.isCashier" class="stats shadow w-full">
+            <IncomeCard />
          </div>
          <div class="stats shadow w-full">
             <MedicineCard />

@@ -16,6 +16,6 @@ const props = defineProps({
       </div>
       <div class="stat-title">{{ props.title }}</div>
       <div class="stat-value">{{ props.value }}</div>
-      <div v-if="props.desc" class="stat-desc">{{ props.desc }}</div>
+      <div v-if="props.desc" class="stat-desc mt-2">{{ props.desc }}</div>
    </div>
 </template>
