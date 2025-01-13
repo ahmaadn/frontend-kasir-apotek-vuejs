@@ -11,11 +11,14 @@ const useTransaction = useTransactionStore()
 const transaction = ref({})
 const medicines = ref({})
 const open = ref(false)
+const loading = ref(false)
 
 const closeModal = () => {
    open.value = false
 }
+
 const openModal = async () => {
+   loading.value = true
    if (!useMedicine.mediciness.length) {
       await useMedicine.fetchMediciness()
    }
@@ -30,13 +33,16 @@ const openModal = async () => {
       }
       return medicineData
    })
+   loading.value = false
    open.value = true
 }
 </script>
 
 <template>
    <div class="flex items-center justify-center">
-      <button class="btn btn-xs btn-success text-white" @click="openModal">Detail</button>
+      <button class="btn btn-xs btn-success text-white" @click="openModal" :disabled="loading">
+         Detail
+      </button>
    </div>
    <TransitionRoot appear :show="open" as="template">
       <Dialog as="div" class="relative z-10">
