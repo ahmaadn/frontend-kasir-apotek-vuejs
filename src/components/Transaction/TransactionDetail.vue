@@ -46,7 +46,7 @@ const closeModal = () => {
                         <p>Nota id</p>
                         <p>: {{ transaction.trid }}</p>
                         <p>Kasir</p>
-                        <p>: {{ transaction.userid }}</p>
+                        <p>: {{ transaction.cashier }}</p>
                         <p>Tanggal</p>
                         <p>: {{ formatDate(transaction.trdate) }}</p>
                         <p>Pembeli</p>
