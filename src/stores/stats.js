@@ -51,6 +51,21 @@ export const useStats = defineStore('stateStore', {
          })
       },
 
+      async last7DaysReportStock(refresh = false) {
+         if (!this.report_stock.length || refresh) {
+            await this.fetchReportStock()
+         }
+         const today = dayjs()
+         const last7Days = []
+         for (let i = 0; i < 7; i++) {
+            last7Days.push(today.subtract(i, 'day').format('YYYY-MM-DD'))
+         }
+         const last7DaysReport = this.report_stock.filter((report) =>
+            last7Days.includes(report.recordDate),
+         )
+         return last7DaysReport
+      },
+
       async todayReportStock(refresh = false) {
          if (!this.report_stock.length || refresh) {
             await this.fetchReportStock()

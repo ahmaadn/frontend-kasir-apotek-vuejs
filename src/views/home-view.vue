@@ -2,7 +2,7 @@
 import { EmployeeCard, MedicineCard, IncomeCard, StockInCard } from '@/components/StatCard'
 import { useUserStore } from '@/stores/user'
 import { ReportTransaction } from '@/components/Report'
-import { BarTransaction, LineMedicineSold } from '@/components/Chart'
+import { BarTransaction, LineMedicineSold, LineStock, BarMedicineIn } from '@/components/Chart'
 
 const useUser = useUserStore()
 </script>
@@ -22,6 +22,7 @@ const useUser = useUserStore()
             <MedicineCard />
          </div>
       </section>
+
       <section
          class="flex flex-col md:grid grid-cols-2 gap-4"
          v-if="useUser.isAdmin || useUser.isCashier"
@@ -34,6 +35,21 @@ const useUser = useUserStore()
          <div class="card bg-base-100 rounded shadow p-0">
             <div class="card-body p-6">
                <LineMedicineSold />
+            </div>
+         </div>
+      </section>
+      <section
+         class="flex flex-col md:grid grid-cols-2 gap-4"
+         v-if="useUser.isAdmin || useUser.isWarehouse"
+      >
+         <div class="card bg-base-100 rounded shadow p-0">
+            <div class="card-body p-6">
+               <LineStock />
+            </div>
+         </div>
+         <div class="card bg-base-100 rounded shadow p-0">
+            <div class="card-body p-6">
+               <BarMedicineIn />
             </div>
          </div>
       </section>
