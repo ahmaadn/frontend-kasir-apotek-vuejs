@@ -1,11 +1,35 @@
 <script setup>
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { currency, formatDate } from '@/lib/utils'
+import html2canvas from 'html2canvas-pro'
+import { jsPDF } from 'jspdf'
+import { Icon } from '@iconify/vue'
 
 defineProps({ transaction: Object, medicines: Object })
 const open = defineModel('open', { default: false })
 
 const closeModal = () => {
+   open.value = false
+}
+
+const onExport = async () => {
+   var element = document.getElementById('element-to-print')
+   html2canvas(element).then((canvas) => {
+      //$("#previewBeforeDownload").html(canvas);
+      var imgData = canvas.toDataURL('image/jpeg', 1)
+      var pdf = new jsPDF('p', 'mm', 'a4')
+      var pageWidth = pdf.internal.pageSize.getWidth()
+      var pageHeight = pdf.internal.pageSize.getHeight()
+      var imageWidth = canvas.width
+      var imageHeight = canvas.height
+
+      var ratio =
+         imageWidth / imageHeight >= pageWidth / pageHeight
+            ? pageWidth / imageWidth
+            : pageHeight / imageHeight
+      pdf.addImage(imgData, 'JPEG', 0, 0, imageWidth * ratio, imageHeight * ratio)
+      pdf.save('invoice.pdf')
+   })
    open.value = false
 }
 </script>
@@ -37,54 +61,67 @@ const closeModal = () => {
                   leave-to="opacity-0 scale-95"
                >
                   <DialogPanel
-                     class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                     class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all"
                   >
-                     <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900 pb-3">
+                     <DialogTitle
+                        as="h3"
+                        class="text-lg font-medium leading-6 text-gray-900 pb-3 pt-6 px-6"
+                     >
                         Riwayat pembelian
                      </DialogTitle>
-                     <div class="grid grid-cols-[20%_1fr] gap-x-1">
-                        <p>Nota id</p>
-                        <p>: {{ transaction.trid }}</p>
-                        <p>Kasir</p>
-                        <p>: {{ transaction.cashier }}</p>
-                        <p>Tanggal</p>
-                        <p>: {{ formatDate(transaction.trdate) }}</p>
-                        <p>Pembeli</p>
-                        <p>: {{ transaction.buyername || '-' }}</p>
+                     <div class="p-6 text-sm" id="element-to-print">
+                        <div class="grid grid-cols-[20%_1fr] gap-x-1">
+                           <p>Nota id</p>
+                           <p>: {{ transaction.trid }}</p>
+                           <p>Kasir</p>
+                           <p>: {{ transaction.cashier }}</p>
+                           <p>Tanggal</p>
+                           <p>: {{ formatDate(transaction.trdate) }}</p>
+                           <p>Pembeli</p>
+                           <p>: {{ transaction.buyername || '-' }}</p>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="grid grid-cols-3 gap-x-2 mb-2 font-bold">
+                           <p>Nama</p>
+                           <p class="text-center">JML</p>
+                           <p class="text-end">Harga</p>
+                        </div>
+                        <div
+                           v-for="(medicine, index) in medicines"
+                           :key="index"
+                           class="grid grid-cols-3 gap-x-2"
+                        >
+                           <p>{{ medicine.medicineName }}</p>
+                           <p class="text-center">{{ medicine.amount }}x</p>
+                           <p class="text-end">{{ currency(medicine.price * medicine.amount) }}</p>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="grid grid-cols-2">
+                           <p>Total</p>
+                           <p class="font-normal text-end">
+                              {{ currency(transaction.total) }}
+                           </p>
+                           <p>Dibayar</p>
+                           <p class="font-normal text-end">
+                              {{ currency(transaction.total + transaction.change) }}
+                           </p>
+                           <p>Kembalian</p>
+                           <p class="font-normal text-end">
+                              {{ currency(transaction.change) }}
+                           </p>
+                        </div>
                      </div>
-                     <div class="divider"></div>
-                     <div
-                        v-for="(medicine, index) in medicines"
-                        :key="index"
-                        class="grid grid-cols-3 gap-x-2"
-                     >
-                        <p>{{ medicine.medicineName }}</p>
-                        <p class="text-center">{{ medicine.amount }}x</p>
-                        <p class="text-end">{{ currency(medicine.price * medicine.amount) }}</p>
-                     </div>
-                     <div class="divider"></div>
-                     <div class="grid grid-cols-2">
-                        <p>Total</p>
-                        <p class="font-normal text-end">
-                           {{ currency(transaction.total) }}
-                        </p>
-                        <p>Dibayar</p>
-                        <p class="font-normal text-end">
-                           {{ currency(transaction.total + transaction.change) }}
-                        </p>
-                        <p>Kembalian</p>
-                        <p class="font-normal text-end">
-                           {{ currency(transaction.change) }}
-                        </p>
-                     </div>
-
-                     <div class="mt-4">
+                     <div class="mt-4 flex justify-between px-6 pb-6">
+                        <button type="button" class="btn btn-sm btn-primary" @click="closeModal">
+                           Kembali
+                        </button>
                         <button
                            type="button"
-                           class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                           @click="closeModal"
+                           class="btn btn-sm btn-success text-white"
+                           @click="onExport"
                         >
-                           Kembali
+                           Cetek
+                           <Icon icon="mdi:invoice-add" width="20" height="20" />
                         </button>
                      </div>
                   </DialogPanel>
