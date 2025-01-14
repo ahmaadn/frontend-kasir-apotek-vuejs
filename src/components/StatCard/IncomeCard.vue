@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import BasicCard from './BasicCard.vue'
 import { useStats } from '@/stores/stats'
 import { onMounted } from 'vue'
-import { currency } from '@/lib/utils'
+import { shortCurrency } from '@/lib/utils'
 
 const stats = useStats()
 const report = ref({})
@@ -19,7 +19,7 @@ onMounted(async () => {
 <template>
    <BasicCard
       title="Pendapatan"
-      :value="currency(income)"
+      :value="shortCurrency(income)"
       icon="mdi:currency-usd"
       class="text-success"
       desc="Hari Ini"

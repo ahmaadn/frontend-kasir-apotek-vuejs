@@ -3,14 +3,14 @@ export function clamp(number, min, max) {
 }
 
 export function currency(value) {
-   return Intl.NumberFormat('id', { currency: 'IDR', style: 'currency' }).format(value)
+   return new Intl.NumberFormat('id', { currency: 'IDR', style: 'currency' }).format(value)
 }
 
 export function formatDate(value) {
    if (typeof value === 'string') {
       value = new Date(value)
    }
-   return Intl.DateTimeFormat('ID', {
+   return new Intl.DateTimeFormat('ID', {
       timeZone: 'Asia/Jakarta',
       day: 'numeric',
       month: 'short',
@@ -30,4 +30,17 @@ export function dateToStr(date) {
       mm = '0' + mm
    }
    return yyyy + '-' + mm + '-' + dd
+}
+
+export function shortCurrency(value) {
+   if (value >= 1000000000) {
+      return (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'M'
+   }
+   if (value >= 1000000) {
+      return (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'jt'
+   }
+   if (value >= 1000) {
+      return (value / 1000).toFixed(1).replace(/\.0$/, '') + 'rb'
+   }
+   return value.toString()
 }
