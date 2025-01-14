@@ -1,4 +1,4 @@
-import { reportSales } from '@/lib/api/report'
+import { reportSales, reportStock } from '@/lib/api/report'
 import { defineStore } from 'pinia'
 import dayjs from 'dayjs'
 
@@ -22,7 +22,19 @@ export const useStats = defineStore('stateStore', {
             updatedat: '2025-01-13T06:39:53.195Z',
          },
       ],
-      report_stock: [],
+      report_stock: [
+         {
+            recordDate: '2025-01-13',
+            medicines: [
+               {
+                  medicineid: 'string',
+                  stockin: 0,
+                  stockout: 0,
+                  remainingStock: 0,
+               },
+            ],
+         },
+      ],
    }),
    actions: {
       async initial() {},
@@ -32,7 +44,23 @@ export const useStats = defineStore('stateStore', {
             this.report_sales = data
          })
       },
-      async fetchReportStock() {},
+      async fetchReportStock() {
+         await reportStock().then((response) => {
+            const { data } = response.data
+            this.report_stock = data
+         })
+      },
+
+      async todayReportStock(refresh = false) {
+         if (!this.report_stock.length || refresh) {
+            await this.fetchReportStock()
+         }
+         const today = dayjs().format('YYYY-MM-DD')
+         const todayStock = this.report_stock.find((report) => report.recordDate === today)
+         return todayStock
+            ? todayStock.medicines.reduce((total, medicine) => total + medicine.stockin, 0)
+            : 0
+      },
 
       async todayReportSales(refresh = false) {
          if (!this.report_sales.length || refresh) {

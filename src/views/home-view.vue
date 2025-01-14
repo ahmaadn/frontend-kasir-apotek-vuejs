@@ -1,5 +1,5 @@
 <script setup>
-import { EmployeeCard, MedicineCard, IncomeCard } from '@/components/StatCard'
+import { EmployeeCard, MedicineCard, IncomeCard, StockInCard } from '@/components/StatCard'
 import { useUserStore } from '@/stores/user'
 import { ReportTransaction } from '@/components/Report'
 import { BarTransaction, LineMedicineSold } from '@/components/Chart'
@@ -14,6 +14,9 @@ const useUser = useUserStore()
          </div>
          <div v-if="useUser.isAdmin || useUser.isCashier" class="stats shadow w-full">
             <IncomeCard />
+         </div>
+         <div v-if="useUser.isAdmin || useUser.isWarehouse" class="stats shadow w-full">
+            <StockInCard />
          </div>
          <div class="stats shadow w-full">
             <MedicineCard />
