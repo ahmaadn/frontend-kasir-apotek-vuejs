@@ -38,7 +38,6 @@ const onSubmit = form.handleSubmit(async (values) => {
    if (success) {
       open.value = true
       responeMessages.value = messages
-      console.log(responeMessages)
       await openDialog()
       cartStore.clearCarts()
       cartStore.clearBuyer()

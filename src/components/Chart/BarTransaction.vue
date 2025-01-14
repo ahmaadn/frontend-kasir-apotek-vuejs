@@ -44,7 +44,6 @@ const options = {
 const fetchChartData = async () => {
    loaded.value = false
    const last7DaysReport = await statsStore.last7DaysReportSales()
-   console.log(last7DaysReport)
    chartData.value.labels = last7DaysReport.map((report) =>
       dayjs(report.summarydate).format('MMM D'),
    )
