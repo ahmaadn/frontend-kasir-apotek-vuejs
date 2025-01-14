@@ -4,17 +4,16 @@ import {
    Title,
    Tooltip,
    Legend,
-   LineElement,
+   BarElement,
    CategoryScale,
    LinearScale,
-   PointElement,
 } from 'chart.js'
 import { Bar } from 'vue-chartjs'
 import { useStats } from '@/stores/stats'
 import { ref, onMounted } from 'vue'
 import dayjs from 'dayjs'
 
-ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const loaded = ref(false)
 const statsStore = useStats()
