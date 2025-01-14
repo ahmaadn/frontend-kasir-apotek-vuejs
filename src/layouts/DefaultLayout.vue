@@ -41,7 +41,7 @@ const logout = async () => {
                   </div>
                   <div class="navbar-end">
                      <div class="flex flex-row gap-4">
-                        <div class="indicator">
+                        <div v-if="userStote.isCashier" class="indicator">
                            <span class="indicator-item badge badge-secondary">{{
                               cartStore.carts.length
                            }}</span>
