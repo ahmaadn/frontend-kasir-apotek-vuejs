@@ -80,7 +80,7 @@ onMounted(() => {
          {{ currency((number || 0) * props.item.price) }}
       </div>
       <div class="btn btn-xs btn-warning" @click="clearCart">Clear</div>
-      <div class="btn btn-xs btn-primary" @click="updateCart">Update</div>
+      <div class="btn btn-xs btn-primary" @click="updateCart">Add</div>
    </div>
 </template>
 <style lang="css" scoped>
